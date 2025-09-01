@@ -57,4 +57,12 @@ public abstract class Character {
     public int getPosY() {
         return posY;
     }
+
+    public String toString() {
+        return "Caracter information: " +
+        "\n Name: " + name +
+        "\n | Damage: " + damage +
+        "\n | Life: " + life +
+        "\n | Position: (" + posX + ", " + posY + ")";
+    }
 }

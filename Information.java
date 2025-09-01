@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Information {
     private static final Scanner SC = new Scanner(System.in);
+    private static String lineBreak2 = "======================================";
+    private static String lineBreak1 = "-------------------";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String RESET = "\u001B[0m";
 
     public static void showCharacterInfo(Character character) {
         System.out.println(character.getName() + " Info:");
@@ -31,5 +36,37 @@ public class Information {
     public static void pressEnterToContinue() {
         System.out.println("Press Enter to continue...");
         SC.nextLine();
+    }
+
+    public static void damageStatus(Character attacker,String hability, int damageDealt, Character defender) {
+        System.out.println
+            (lineBreak1 + "\n" 
+            + attacker.getName() + " used " + hability + " on " + defender.getName() + "!"+
+            "\n" + lineBreak1);
+
+        System.out.println(hability + " hit with a power of " + damageDealt + " points! \n" + 
+        defender.getName() + " now has " + defender.getLife() + " points of life.");
+
+        System.out.println(lineBreak2);
+    }
+
+    public static void damageStatus(Character attacker,int damageDealt, Character defender) {
+        damageStatus(attacker, "attack",damageDealt, defender);
+    }
+
+    public static void damageMissed(Character attacker, String hability, Character defender) {
+        System.out.println
+            (lineBreak2 + "\n" 
+            + attacker.getName() + " used " + hability + "!"+
+            "\n" + lineBreak2);
+
+        System.out.println(hability + " missed! No damage dealt to " + defender.getName() + ".");
+
+        System.out.println(lineBreak2);
+    }
+
+    public static void characterDead(Character character) {
+        System.out.println(RED + character.getName() + RESET + " has been defeated!");
+        System.out.println(lineBreak2);
     }
 }
