@@ -3,14 +3,24 @@ package project.rpg;
 public abstract class Character {
     private String name;
     private int damage;
+
     private int life;
+    private int maxLife;
+
     private int posX;
     private int posY;
 
-    protected Character(String name, int damage, int life, int posX, int posY) {
+    private int criticalChance = 10;
+    private int criticalChanceAculative = 10;
+    private int critalDamage = 50;
+
+    private double missChance = 0.3;
+
+    protected Character(String name, int damage, int maxLife, int posX, int posY) {
         this.name = name;
         this.damage = damage;
-        this.life = life;
+        this.maxLife = maxLife;
+        this.life = maxLife;
         this.posX = posX;
         this.posY = posY;
     }
@@ -56,6 +66,25 @@ public abstract class Character {
     }
     public int getPosY() {
         return posY;
+    }
+    public int getMaxLife() {
+        return maxLife;
+    }
+    public int getCriticalChance() {
+        return criticalChance;
+    }
+    public int getCriticalChanceAcumulative(){
+        return criticalChanceAculative;
+    }
+    public int getCritalDamage() {
+        return critalDamage;
+    }
+
+    public double getMissChance(){
+        return missChance;
+    }
+    public void setCriticalChanceAculative(int criticalChanceAculative) {
+        this.criticalChanceAculative = criticalChanceAculative;
     }
 
     public String toString() {

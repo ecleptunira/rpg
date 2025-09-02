@@ -3,22 +3,20 @@ package project.rpg;
 public class Monster extends Player {
     private String hability1 = "Stomp";
 
-    public Monster(String name, int damage, int life, int posX, int posY) {
-        super(name, damage, life, posX, posY);
+    public Monster(String name, int damage, int maxLife, int posX, int posY) {
+        super(name, damage, maxLife, posX, posY);
     }
 
     @Override
     public void attack(Character enemy) {
         if (!canAttack(enemy)) {
-            System.out.println("Out of range");
+            Information.outOfRange(this, enemy);
             return;
         } 
-
         if (Math.random() <= 0.3) {
-            System.out.println("failed attack");
+            Information.damageMissed(this, enemy);
             return;
         }
-
         int baseDamage = (int) (this.getDamage() * 0.85);
         int bonusDamage = (int) (this.getDamage() * 0.45);
         int variableDamage = (int) (Math.random() * (bonusDamage + 1));
@@ -30,10 +28,11 @@ public class Monster extends Player {
 
     public void stomp(Character enemy) {
         if (!canAttack(enemy)) {
-            System.out.println("Out of range");
+            Information.outOfRange(this, enemy);
+            return;
         } 
         if (Math.random() <= 0.3) {
-            System.out.println("Stomp Failed ");
+            Information.damageMissed(this, hability1, enemy);
             return;
         } 
         int baseDamage = (int) (this.getDamage() * 1);

@@ -5,17 +5,24 @@ public class Game {
         System.out.println();
         Information.limparTela();
         Hero hero = new Hero("Hero", 30, 150, 1, 0);
-        Monster monster = new Monster("Monster", 20, 200, 0, 0);
+        Monster monster = new Monster("Monster", 20, 1000, 0, 0); // vida 200
 
         int heroWins = 0;
         int monsterWins = 0;
         int fights = 0;
         int turn = 0;
 
-        System.out.println("=================Battle Start!=================");
+        Information.battleStart();
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        hero.divineSword(monster);
+        //ERRO está aplicando o critico acumulativo mesmo errando.
 
-        boolean replay = true;
-
+        boolean replay = false;
         if (replay){
             do{
                 turn++;
@@ -52,16 +59,17 @@ public class Game {
                     //Information.pressEnterToContinue();
                 }
                 System.out.println();
+                //Information.pressEnterToContinue();
             }
-            while (fights < 1); //mudar para 5 ou mais para mais lutas
+            while (fights < 10); //mudar para 5 ou mais para mais lutas
         }
         if (replay){
-        System.out.println("==============Battle Over!==============");
+        Information.battleOver(heroWins == monsterWins ? "DRAW" : heroWins > monsterWins ? hero.getName() : monster.getName());
         System.out.println("Total fights: " + fights);
         System.out.println(hero.getName() + " wins: " + heroWins);
         System.out.println(monster.getName() + " wins: " + monsterWins);
         System.out.println("Draws: " + (fights - (heroWins + monsterWins)));
-        System.out.println("========================================");
+        System.out.println("========================================\n\n\n");
         }
     }
 }

@@ -2,18 +2,18 @@ package project.rpg;
 
 public class Player extends Character{
 
-    public Player(String name, int damage, int life, int posX, int posY) {
-        super(name, damage, life, posX, posY);
+    public Player(String name, int damage, int maxLife, int posX, int posY) {
+        super(name, damage, maxLife, posX, posY);
     }
 
     @Override
     public void attack(Character enemy) {
         if (!canAttack(enemy)) {
-            System.out.println("Out of range");
+            Information.outOfRange(this, enemy);
             return;
-        } 
-        if (Math.random() <= 0.3) {
-            System.out.println("failed attack");
+        }
+        if (Math.random() <= this.getMissChance()) {
+            Information.damageMissed(this, enemy);
             return;
         }
         int baseDamage = (int) (this.getDamage() * 0.75);
