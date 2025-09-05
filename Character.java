@@ -11,8 +11,8 @@ public abstract class Character {
     private int posY;
 
     private int criticalChance = 10;
-    private int criticalChanceAculative = 10;
-    private int critalDamage = 50;
+    private int criticalChanceAcumulated = 10; 
+    private int criticalDamage = 50;
 
     private double missChance = 0.3;
 
@@ -73,18 +73,18 @@ public abstract class Character {
     public int getCriticalChance() {
         return criticalChance;
     }
-    public int getCriticalChanceAcumulative(){
-        return criticalChanceAculative;
+    public int getCriticalChanceAcumulated(){
+        return criticalChanceAcumulated;
     }
-    public int getCritalDamage() {
-        return critalDamage;
+    public int getCriticalDamage() {
+        return criticalDamage;
     }
 
     public double getMissChance(){
         return missChance;
     }
-    public void setCriticalChanceAculative(int criticalChanceAculative) {
-        this.criticalChanceAculative = criticalChanceAculative;
+    public void setCriticalChanceAcumulated(int criticalChanceAcumulated) {
+        this.criticalChanceAcumulated = criticalChanceAcumulated;
     }
 
     public String toString() {

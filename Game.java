@@ -13,14 +13,6 @@ public class Game {
         int turn = 0;
 
         Information.battleStart();
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        hero.divineSword(monster);
-        //ERRO está aplicando o critico acumulativo mesmo errando.
 
         boolean replay = false;
         if (replay){
@@ -61,7 +53,7 @@ public class Game {
                 System.out.println();
                 //Information.pressEnterToContinue();
             }
-            while (fights < 10); //mudar para 5 ou mais para mais lutas
+            while (fights < 1); //mudar para 5 ou mais para mais lutas
         }
         if (replay){
         Information.battleOver(heroWins == monsterWins ? "DRAW" : heroWins > monsterWins ? hero.getName() : monster.getName());

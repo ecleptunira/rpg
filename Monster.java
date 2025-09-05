@@ -12,35 +12,27 @@ public class Monster extends Player {
         if (!canAttack(enemy)) {
             Information.outOfRange(this, enemy);
             return;
-        } 
-        if (Math.random() <= 0.3) {
-            Information.damageMissed(this, enemy);
-            return;
         }
-        int baseDamage = (int) (this.getDamage() * 0.85);
-        int bonusDamage = (int) (this.getDamage() * 0.45);
-        int variableDamage = (int) (Math.random() * (bonusDamage + 1));
-        int damageDealt = baseDamage + variableDamage;
-
-        enemy.takeDamage(damageDealt);
-        Information.damageStatus(this, damageDealt, enemy);
+        DamageCalculator.calculateAndApplyDamage(
+            this, 
+            enemy, 
+            0.85,
+            0.45,
+            this.getMissChance(),
+            "Attack");
     }
 
     public void stomp(Character enemy) {
         if (!canAttack(enemy)) {
             Information.outOfRange(this, enemy);
             return;
-        } 
-        if (Math.random() <= 0.3) {
-            Information.damageMissed(this, hability1, enemy);
-            return;
-        } 
-        int baseDamage = (int) (this.getDamage() * 1);
-        int bonusDamage = (int) (this.getDamage() * 0.5);
-        int variableDamage = (int) (Math.random() * (bonusDamage + 1));
-        int damageDealt = baseDamage + variableDamage;
-        
-        enemy.takeDamage(damageDealt);
-        Information.damageStatus(this, hability1, damageDealt, enemy);
+        }
+        DamageCalculator.calculateAndApplyDamage(
+            this, 
+            enemy, 
+            1, 
+            0.5, 
+            this.getMissChance(), 
+            hability1);
     }
 }

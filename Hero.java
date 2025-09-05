@@ -14,18 +14,13 @@ public class Hero extends Player {
             Information.outOfRange(this, enemy);
             return;
         }
-        if (Math.random() <= 0.3) {
-            Information.damageMissed(this, enemy);
-            return;
-        }
-        int baseDamage = (int) (this.getDamage() * 0.95);
-        int bonusDamage = (int) (this.getDamage() * 0.15);
-        int variableDamage = (int) (Math.random() * (bonusDamage + 1));
-        int damageDealt = baseDamage + variableDamage;
-
-        enemy.takeDamage(damageDealt);
-        Information.damageStatus(this, damageDealt, enemy);
-
+        DamageCalculator.calculateAndApplyDamage(
+            this, 
+            enemy, 
+            0.95, 
+            0.15, 
+            this.getMissChance(), 
+            "attack");
     }
 
     public void divineSword(Character enemy) {
@@ -33,18 +28,12 @@ public class Hero extends Player {
             Information.outOfRange(this, enemy);
             return;
         }
-        if (Math.random() <= 0.3) { // base 0.3
-            Information.damageMissed(this, hability1, enemy);
-            System.out.println("***miss***"); // tirar
-            return;
-        }
-        System.out.println("***calculando dano***"); // tirar
-        int baseDamage = (int) (this.getDamage() * 1);
-        int bonusDamage = (int) (this.getDamage() * 0.25);
-        int variableDamage = (int) (Math.random() * (bonusDamage + 1));
-        int damageDealt = DamageCalculator.criticalChance(this, (baseDamage + variableDamage));
-
-        enemy.takeDamage(damageDealt);
-        Information.damageStatus(this, hability1, damageDealt, enemy);
+        DamageCalculator.calculateAndApplyDamage(
+            this, 
+            enemy, 
+            1.0, 
+            0.25, 
+            this.getMissChance(), 
+            hability1);
     }
 }
