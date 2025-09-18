@@ -3,8 +3,8 @@ package project.rpg;
 public class Monster extends Player {
     private String hability1 = "Stomp";
 
-    public Monster(String name, int damage, int maxLife, int posX, int posY) {
-        super(name, damage, maxLife, posX, posY);
+    public Monster(String name, int level, int damage, int physicalDefense, int magicDefense, int maxLife, int posX, int posY) {
+        super(name, level, damage, physicalDefense, magicDefense, maxLife, posX, posY);
     }
 
     @Override
@@ -18,8 +18,8 @@ public class Monster extends Player {
             enemy, 
             0.85,
             0.45,
-            this.getMissChance(),
-            "Attack");
+            "Attack",
+            DamageType.PHYSICAL);
     }
 
     public void stomp(Character enemy) {
@@ -32,7 +32,7 @@ public class Monster extends Player {
             enemy, 
             1, 
             0.5, 
-            this.getMissChance(), 
-            hability1);
+            hability1,
+            DamageType.PHYSICAL);
     }
 }

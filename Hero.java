@@ -4,8 +4,8 @@ public class Hero extends Player {
 
     String hability1 = "Divine Sword";
 
-    public Hero(String name, int damage, int maxLife, int posX, int posY) {
-        super(name, damage, maxLife, posX, posY);
+    public Hero(String name, int level, int damage, int physicalDefense, int magicDefense, int maxLife, int posX, int posY) {
+        super(name, level, damage, physicalDefense, magicDefense, maxLife, posX, posY);
     }
 
     @Override
@@ -19,8 +19,8 @@ public class Hero extends Player {
             enemy, 
             0.95, 
             0.15, 
-            this.getMissChance(), 
-            "attack");
+            "attack",
+            DamageType.PHYSICAL);
     }
 
     public void divineSword(Character enemy) {
@@ -32,8 +32,8 @@ public class Hero extends Player {
             this, 
             enemy, 
             1.0, 
-            0.25, 
-            this.getMissChance(), 
-            hability1);
+            0.25,  
+            hability1,
+            DamageType.PHYSICAL);
     }
 }

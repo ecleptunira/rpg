@@ -32,15 +32,6 @@ public class Information {
         System.out.println("╚" + "═".repeat(totalLength - 2) + "╝");
     }
 
-    public static void showCharacterInfo(Character character) {
-        System.out.println(character.getName() + " Info:");
-        System.out.println(
-            "Name: " + character.getName() + 
-            " | Damage: " + character.getDamage() + 
-            " | Life: " + character.getLife() + 
-            " | Position: (" + character.getPosX() + ", " + character.getPosY() + ")");
-    }
-
     public static void limparTela() {
         try {
             String os = System.getProperty("os.name");
@@ -58,9 +49,25 @@ public class Information {
         SC.nextLine();
     }
 
-    public static void damageStatus(Character attacker,String hability, int damageDealt, Character defender) {
-        System.out.println(lineBreak1);
+    public static void criticalHit(Character attacker, String hability, int damageDealt, Character defender) {
         System.out.println(
+            lineBreak1 + "\n" +
+            RED + ">>> CRITICAL HIT! <<<" + RESET + "\n" +
+            YELLOW + attacker.getName() + RESET + " used " 
+            + PURPLE + hability + RESET + " on " 
+            + BLUE + defender.getName() + RESET + "!\n"
+        );
+
+        System.out.println(
+            PURPLE + hability + RESET + " unleashed a " 
+            + RED + "CRITICAL power of " + damageDealt + RESET + " points!"
+        );
+        System.out.println(lineBreak1);
+        }
+
+    public static void damageStatus(Character attacker,String hability, int damageDealt, Character defender) {
+        System.out.println(
+            lineBreak1 + "\n" +
             YELLOW + attacker.getName() + RESET + " used " 
             + PURPLE + hability + RESET + " on " 
             + BLUE + defender.getName() + RESET + "!\n"
@@ -69,7 +76,6 @@ public class Information {
             PURPLE + hability + RESET + " hit with a power of " 
             + GREEN + damageDealt + RESET + " points!"
         );
-        showHealth(defender);
         System.out.println(lineBreak1);
     }
 
@@ -84,11 +90,13 @@ public class Information {
         + PURPLE + hability + RESET + "!"+
         "\n" + lineBreak1);
         
-        System.out.println(hability + " missed! No damage dealt to " + defender.getName() + ".");
+        System.out.println(PURPLE + hability + RESET + 
+        " missed! No damage dealt to " 
+        + BLUE + defender.getName() + RESET + ".");
         
         System.out.println(lineBreak1);
     }
-    
+
     public static void damageMissed(Character attacker, Character defender) {
         damageMissed(attacker, "attack", defender);
     }
@@ -100,7 +108,7 @@ public class Information {
     }
 
     public static void characterDead(Character character) {
-        System.out.println(RED + character.getName() + RESET + 
+        System.out.println("\n" + RED + character.getName() + RESET + 
         " has been "+ RED +"defeated!" + RESET);
         System.out.println(lineBreak2);
     }
@@ -109,7 +117,7 @@ public class Information {
         int totalBars = 20;
         int filledBars = (int) Math.round(((double) character.getLife() / character.getMaxLife()) * totalBars);
         int emptyBars = totalBars - filledBars;
-        String healthBar = "[" + GREEN + "█".repeat(filledBars) + RESET + " ".repeat(emptyBars) + "]";
+        String healthBar = "[" + GREEN + "█".repeat(filledBars) + RED + "-".repeat(emptyBars) + RESET + "]";
         System.out.println(YELLOW + character.getName() + RESET + " Health: " + healthBar + " "+ character.getLife() + "/" + character.getMaxLife() + " HP");
     }
 }

@@ -1,0 +1,100 @@
+# Explicação do Jogo de RPG
+
+Este documento detalha as mecânicas e расчёты do jogo de RPG.
+
+## Visão Geral do Jogo
+
+O jogo é um RPG de combate por turnos entre um Herói e um Monstro. A cada turno, um personagem ataca o outro. O jogo termina quando a vida de um dos personagens chega a 0.
+
+## Atributos dos Personagens (Character)
+
+Cada personagem, seja Herói ou Monstro, possui os seguintes atributos:
+
+- **name**: Nome do personagem.
+- **level**: Nível do personagem, influencia no dano causado.
+- **damage**: Dano base do personagem.
+- **physicalDefense**: Defesa contra ataques físicos.
+- **magicDefense**: Defesa contra ataques mágicos.
+- **life**: Pontos de vida atuais do personagem.
+- **maxLife**: Pontos de vida máximos do personagem.
+- **posX**, **posY**: Posição do personagem no mapa.
+- **criticalChance**: Chance base de um ataque ser crítico (em porcentagem).
+- **criticalChanceAcumulated**: Chance acumulada de um ataque ser crítico. Aumenta a cada ataque não crítico.
+- **criticalDamage**: Dano extra causado por um ataque crítico (em porcentagem).
+- **evasion**: Chance de desviar de um ataque (em porcentagem).
+
+## Mecânica de Ataque
+
+### `canAttack(Character enemy)`
+
+Um personagem pode atacar um inimigo se ele estiver em uma casa adjacente (não na diagonal). A distância é calculada usando a diferença absoluta das coordenadas `posX` e `posY`.
+
+- **Retorna `true` se:**
+  - A distância em `X` é 1 e a distância em `Y` é 0.
+  - A distância em `X` é 0 e a distância em `Y` é 1.
+- **Retorna `false` caso contrário.**
+
+### `attack(Character enemy)`
+
+Este é o método de ataque padrão. Ele verifica se o inimigo está no alcance e, se estiver, calcula e aplica o dano.
+
+## Habilidades
+
+### Herói (`Hero`)
+
+- **`attack(Character enemy)`**: Ataque padrão do Herói.
+  - **Fator de Dano Base**: 95% do dano do personagem.
+  - **Fator de Dano Bônus**: 15% do dano do personagem.
+  - **Tipo de Dano**: Físico.
+
+- **`divineSword(Character enemy)`**: Habilidade especial do Herói.
+  - **Fator de Dano Base**: 100% do dano do personagem.
+  - **Fator de Dano Bônus**: 25% do dano do personagem.
+  - **Tipo de Dano**: Físico.
+
+### Monstro (`Monster`)
+
+- **`attack(Character enemy)`**: Ataque padrão do Monstro.
+  - **Fator de Dano Base**: 85% do dano do personagem.
+  - **Fator de Dano Bônus**: 45% do dano do personagem.
+  - **Tipo de Dano**: Físico.
+
+- **`stomp(Character enemy)`**: Habilidade especial do Monstro.
+  - **Fator de Dano Base**: 100% do dano do personagem.
+  - **Fator de Dano Bônus**: 50% do dano do personagem.
+  - **Tipo de Dano**: Físico.
+
+## Cálculo de Dano (`DamageCalculator`)
+
+O cálculo de dano é um processo de várias etapas:
+
+1.  **Verificação de Evasão**:
+    - Um número aleatório entre 0 e 1 é gerado.
+    - Se o número for menor ou igual à `evasion` do defensor (dividida por 100), o ataque erra e nenhum dano é causado.
+
+2.  **Cálculo do Dano Base**:
+    - `danoBase = danoDoAtacante * fatorDeDanoBase`
+    - `danoBonus = danoDoAtacante * fatorDeDanoBonus`
+    - `danoVariavel = numeroAleatorio * (danoBonus + 1)`
+    - `danoCausado = danoBase + danoVariavel`
+
+3.  **Ajuste pela Diferença de Nível**:
+    - A diferença de nível entre o atacante e o defensor é calculada.
+    - Se a diferença for de até 5 níveis, o multiplicador é 1.0.
+    - Para diferenças maiores que 5, é aplicado um fator de 10% por nível, com um teto de 2.0 (para atacante com nível muito superior) e um piso de 0.5 (para atacante com nível muito inferior).
+    - `danoCausado = danoCausado * fatorDeDiferencaDeNivel`
+
+4.  **Aplicação da Defesa**:
+    - O dano é reduzido pela defesa do defensor, dependendo do tipo de dano (Físico ou Mágico).
+    - `danoCausado = danoCausado / (1 + (defesa / 10.0))`
+
+5.  **Verificação de Acerto Crítico**:
+    - Um número aleatório entre 0 e 100 é gerado.
+    - Se o número for menor que a `criticalChanceAcumulated` do atacante, o ataque é crítico.
+      - A `criticalChanceAcumulated` é resetada para a `criticalChance` base.
+      - O dano é multiplicado pelo `criticalDamage`.
+      - `danoCausado = danoCausado * (1 + (criticalDamage / 100.0))`
+    - Se não for crítico, a `criticalChance` base é somada à `criticalChanceAcumulated` para o próximo ataque.
+
+6.  **Aplicação do Dano**:
+    - O `danoCausado` final é subtraído da `life` do defensor.

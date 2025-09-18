@@ -1,9 +1,9 @@
 package project.rpg;
 
 public class Player extends Character{
-
-    public Player(String name, int damage, int maxLife, int posX, int posY) {
-        super(name, damage, maxLife, posX, posY);
+    
+    public Player(String name, int level, int damage, int physicalDefense, int magicDefense, int maxLife, int posX, int posY) {
+        super(name, level, damage, physicalDefense, magicDefense, maxLife, posX, posY);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Player extends Character{
             enemy, 
             0.75, 
             0.25, 
-            this.getMissChance(), 
-            "attack");
+            "attack",
+            DamageType.PHYSICAL);
     }
 }
