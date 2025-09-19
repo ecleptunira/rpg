@@ -1,4 +1,4 @@
-package project.rpg;
+package project.rpg.combat;
 
 public enum DamageType {
     PHYSICAL,

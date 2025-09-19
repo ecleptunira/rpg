@@ -1,4 +1,7 @@
-package project.rpg;
+package project.rpg.combat;
+
+import project.rpg.characters.Character;
+import project.rpg.utils.Information;
 
 public class DamageCalculator {
 
@@ -49,8 +52,8 @@ public class DamageCalculator {
      * The higher the value, the less effective the defense.
      * Example:
      * Damage = 100 and DEFENSE_SCALE = 10
-     * Defense 00 --- 100/(1+0/10)  = 100/1   = 100 damage taken
-     * Defense 05 --- 100/(1+5/10)  = 100/1.5 = 66  damage taken
+     * Defense 00 --- 100/(1+00/10)  = 100/1   = 100 damage taken
+     * Defense 05 --- 100/(1+05/10)  = 100/1.5 = 66  damage taken
      * Defense 10 --- 100/(1+10/10) = 100/2   = 50  damage taken
      * Defense 20 --- 100/(1+20/10) = 100/3   = 33  damage taken
      */
@@ -65,8 +68,6 @@ public class DamageCalculator {
         if (hitChance < 5 ) hitChance = 5; // Minimum hit chance of 5%
         if (hitChance > 95) hitChance = 95; // Maximum hit chance of 95%
         double randomValue = Math.random() * 100;
-        System.out.println("Hit chance: " + hitChance + "% | Roll: " + (int)randomValue);
-        
         return  randomValue < hitChance;
     }
 

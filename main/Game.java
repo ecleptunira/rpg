@@ -1,19 +1,22 @@
-package project.rpg;
+package project.rpg.main;
+import project.rpg.characters.*;
+import project.rpg.utils.*;
+
 
 public class Game {
     public static void main(String[] args) {
         System.out.println();
         Information.limparTela();
-        Hero hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0);
-        Monster monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0);
+        Hero hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0, "Hero");
+        Monster monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0, "Monster");
         
         int heroWins = 0;
         int monsterWins = 0;
         int fights = 0;
         int turn = 0;
         
-        // Hero hero1 = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0);
-        // Monster monster1 = new Monster("Monster", 1, 20, 3, 3, 1000, 0, 0);
+        // Hero hero1 = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0, "Hero");
+        // Monster monster1 = new Monster("Monster", 1, 20, 3, 3, 1000, 0, 0, "Monster");
 
 
         boolean replay = true;
@@ -33,8 +36,8 @@ public class Game {
                 if (monster.getLife() <= 0) {
                     Information.characterDead(monster);
                     heroWins++; fights++; turn = 0;
-                    hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0);
-                    monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0);
+                    hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0, "Hero");
+                    monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0, "Monster");
                     continue;
                     //Information.pressEnterToContinue();
                 }
@@ -49,8 +52,8 @@ public class Game {
                 if (hero.getLife() <= 0) {
                     Information.characterDead(hero);
                     monsterWins++; fights++; turn = 0;
-                    hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0);
-                    monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0);
+                    hero = new Hero("Hero", 1, 30, 4, 2, 150, 1, 0, "Hero");
+                    monster = new Monster("Monster", 1, 20, 3, 3, 200, 0, 0, "Monster");
                     continue;
                     //Information.pressEnterToContinue();
                 }

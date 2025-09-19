@@ -1,4 +1,6 @@
-package project.rpg;
+package project.rpg.utils;
+
+import project.rpg.characters.Character;
 
 import java.util.Scanner;
 
