@@ -1,21 +1,18 @@
-package project.rpg.characters;
+package project.rpg.characters.classes.classes;
 
+import project.rpg.characters.Player;
+import project.rpg.characters.classes.jobs.Job;
 import project.rpg.combat.DamageCalculator;
 import project.rpg.combat.DamageType;
+import project.rpg.characters.Character;
 import project.rpg.utils.Information;
 
-public class Hero extends Player {
+public class Monster extends Player{
 
-    String hability1 = "Divine Sword";
-
-    public Hero(String name, int level, int damage, 
-                int physicalDefense, int magicDefense, 
-                int maxLife, int posX, int posY,
-                String ocupation) {
-        super(name, level, damage, physicalDefense, magicDefense, maxLife, posX, posY, ocupation);
+    public Monster(String name, Job job) {
+        super(name, job);
     }
-
-    @Override
+    
     public void attack(Character enemy) {
         if (!canAttack(enemy)) {
             Information.outOfRange(this, enemy);
@@ -24,13 +21,13 @@ public class Hero extends Player {
         DamageCalculator.calculateAndApplyDamage(
             this, 
             enemy, 
-            0.95, 
-            0.15, 
-            "attack",
+            0.85,
+            0.45,
+            "Attack",
             DamageType.PHYSICAL);
     }
 
-    public void divineSword(Character enemy) {
+    public void stomp(Character enemy) {
         if (!canAttack(enemy)) {
             Information.outOfRange(this, enemy);
             return;
@@ -38,9 +35,10 @@ public class Hero extends Player {
         DamageCalculator.calculateAndApplyDamage(
             this, 
             enemy, 
-            1.0, 
-            0.25,  
-            hability1,
+            1, 
+            0.5, 
+            "Stomp",
             DamageType.PHYSICAL);
     }
+
 }

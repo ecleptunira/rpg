@@ -74,14 +74,16 @@ public class DamageCalculator {
     public static void calculateAndApplyDamage( Character attacker, Character defensor, 
                                                 double baseDamageFactor, double bonusDamageFactor, 
                                                 String hability, DamageType damageType) {
-        // check if is a miss
+        
+                                                    // check if is a miss
         if (willHit(attacker, defensor)) {
             Information.damageMissed(attacker, hability, defensor);
             return;
         }
+
         // calculate the damage
-        int baseDamage = (int) (attacker.getDamage() * baseDamageFactor);
-        int bonusDamage = (int) (attacker.getDamage() * bonusDamageFactor);
+        int baseDamage = (int) (attacker.getPhysicalDamage() * baseDamageFactor);
+        int bonusDamage = (int) (attacker.getPhysicalDamage() * bonusDamageFactor);
         int variableDamage = (int) (Math.random() * (bonusDamage + 1));
         int damageDealt = (int) ((baseDamage + variableDamage) * levelDiference(attacker, defensor));
 

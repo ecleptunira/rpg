@@ -1,4 +1,4 @@
-package project.rpg;
+package project.rpg.utils;
 
 public enum Direction {
     UP,

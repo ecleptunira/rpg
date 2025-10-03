@@ -1,29 +1,35 @@
 package project.rpg.characters;
 
-import project.rpg.Direction;
+import project.rpg.utils.Direction;
+import project.rpg.characters.classes.jobs.Job;
+import project.rpg.characters.skills.Skill;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Character {
+    private List<Skill> skills = new ArrayList<>();
+
     private String name;
     private int level = 1;
-    private int damage;
+    private int physicalDamage = 1;
+    private int magicDamage = 1;
 
-    private int physicalDefense; // base 1
-    private int magicDefense; // base 1
+    private int physicalDefense = 0;
+    private int magicDefense = 0;
 
-    private int life;
-    private int maxLife;
+    private int life = 100;
+    private int maxLife = life;
 
-    private int posX;
-    private int posY;
+    private int posX = 0;
+    private int posY = 0;
 
-    private String ocupation;
-
-    private int criticalChance = 0; //base 0
+    private int criticalChance = 0; 
     private int criticalChanceAcumulated = criticalChance; //base equals to critical chance
-    private int criticalDamage = 50; // base 50%
+    private int criticalDamage = 50; 
 
-    private int evasion = 10; // base 10%
-    private int accuracy = 5; // base 4%
+    private int evasion = 0;
+    private int accuracy = 0; 
 
     private int block = 0;
     private int blockReduction = 0;
@@ -31,53 +37,14 @@ public abstract class Character {
     private int parryReduction = 0;
     private int parryCounterChance = 0;
 
-    protected Character(String name, int level, int damage, 
-                        int physicalDefense, int magicDefense, 
-                        int maxLife, int posX, int posY) {
+    protected Character(String name, Job choosenClass) {
         this.name = name;
-        this.level = level;
-        this.damage = damage;
-        this.physicalDefense = physicalDefense;
-        this.magicDefense = magicDefense;
-        this.maxLife = maxLife;
-        this.life = maxLife;
-        this.posX = posX;
-        this.posY = posY;
+        choosenClass.applyClassStats(this);
     }
 
-    protected Character(String name, int level, int damage, 
-                        int physicalDefense, int magicDefense, 
-                        int maxLife, int posX, int posY,
-                        String ocupation) {
+    protected Character(String name){
         this.name = name;
-        this.level = level;
-        this.damage = damage;
-        this.physicalDefense = physicalDefense;
-        this.magicDefense = magicDefense;
-        this.maxLife = maxLife;
-        this.life = maxLife;
-        this.posX = posX;
-        this.posY = posY;
-        this.ocupation = "Citizen";
     }
-
-    // public void setOcupation(String ocupation){
-    //     if (ocupation.equals("Swordsmen")){
-    //         this.ocupation = "Swordsmen";
-    //         this.criticalChance = 15;
-    //         this.criticalDamage = 75;
-    //         this.parry = 10;
-    //         this.parryReduction = 20;
-    //         this.parryCounterChance = 40;
-    //     } else if (ocupation.equals("Archer")){
-
-    //     } else if (ocupation.equals("Monster")){
-
-    //     } else if(ocupation.equals("Hero")){
-
-    //     } else 
-    //         this.ocupation = "none";
-    // }
 
     public boolean canAttack(Character enemy) {
         int deltaX = Math.abs(this.posX - enemy.posX);
@@ -92,13 +59,12 @@ public abstract class Character {
         }
     }
 
-    public abstract void attack(Character enemy);
-
     public String toString() {
         return "Caracter information: " +
         "\n Name: " + name + " | Level: " + level +
         "\n | Life: " + life + "/" + maxLife +
-        "\n | Damage: " + damage +
+        "\n | Physical Damage: " + physicalDamage +
+        "\n | Magic Damage: " + magicDamage + 
         "\n | Physical defense: " + physicalDefense +
         "\n | Magic defense: " + magicDefense +
         "\n | Critical Chance: " + criticalChance + "%" +
@@ -106,7 +72,8 @@ public abstract class Character {
         "\n | Evasion: " + evasion + "%" +
         "\n | Accuracy: " + accuracy + "%" +
         "\n | Block: " + block + "%" + 
-        "\n | Position: (" + posX + ", " + posY + ")";
+        "\n | Position: (" + posX + ", " + posY + ")" +
+        "\n | Skills: " + skills.stream().map(Skill::getName).collect(Collectors.joining(", "));
     }
 
     public void move (Direction direction) {
@@ -119,6 +86,15 @@ public abstract class Character {
         } else if (direction == Direction.RIGHT) {
             this.posX += 1;
         }
+    }
+
+    //Setters and Getters
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+    public void addSkills(Skill skill){
+        skills.add(skill);
     }
 
     public String getName() {
@@ -135,11 +111,18 @@ public abstract class Character {
         this.level = level;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getPhysicalDamage() {
+        return physicalDamage;
     }
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setPhysicalDamage(int physicalDamage) {
+        this.physicalDamage = physicalDamage;
+    }
+
+    public int getMagicDamage() {
+        return magicDamage;
+    }
+    public void setMagicDamage(int magicDamage) {
+        this.magicDamage = magicDamage;
     }
 
     public int getPhysicalDefense(){
@@ -252,10 +235,6 @@ public abstract class Character {
     }
     public void setParryCounterChance(int parryCounterChance) {
         this.parryCounterChance = parryCounterChance;
-    }
-
-    public String getOcupation(){
-        return ocupation;
     }
 
 }
