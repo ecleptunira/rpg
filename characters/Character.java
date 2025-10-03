@@ -10,32 +10,32 @@ import java.util.stream.Collectors;
 public abstract class Character {
     private List<Skill> skills = new ArrayList<>();
 
-    private String name;
-    private int level = 1;
-    private int physicalDamage = 1;
-    private int magicDamage = 1;
+    private String name;                 // name of the character
+    private int level = 1;               // level of the character
+    private int physicalDamage = 1;      // base physical damage
+    private int magicDamage = 1;         // base magic damage
 
-    private int physicalDefense = 0;
-    private int magicDefense = 0;
+    private int physicalDefense = 0;     //base physical defense
+    private int magicDefense = 0;        // base magic defense
 
-    private int life = 100;
-    private int maxLife = life;
+    private int life = 100;              // current life
+    private int maxLife = life;          // maximum life
 
-    private int posX = 0;
-    private int posY = 0;
+    private int posX = 0;                // position on X axis
+    private int posY = 0;                // position on Y axis
 
-    private int criticalChance = 0; 
-    private int criticalChanceAcumulated = criticalChance; //base equals to critical chance
-    private int criticalDamage = 50; 
+    private int criticalChance = 0;                        // percentage chance to land a critical hit
+    private int criticalChanceAcumulated = criticalChance; // acumulated critical chance for next attack
+    private int criticalDamage = 50;                       // percentage increase in damage on a critical hit
 
-    private int evasion = 0;
-    private int accuracy = 0; 
+    private int evasion = 0;              // percentage chance to evade an attack
+    private int accuracy = 0;             // percentage chance to hit an attack
 
-    private int block = 0;
-    private int blockReduction = 0;
-    private int parry = 0;
-    private int parryReduction = 0;
-    private int parryCounterChance = 0;
+    private int block = 0;                // percentage chance to block an attack
+    private int blockReduction = 0;       // percentage of damage reduction when a block is successful
+    private int parry = 0;                // percentage chance to parry an attack
+    private int parryReduction = 0;       // percentage of damage reduction when a parry is successful
+    private int parryCounterChance = 0;   // percentage chance to counterattack after a successful parry
 
     protected Character(String name, Job choosenClass) {
         this.name = name;
@@ -52,6 +52,11 @@ public abstract class Character {
         return (deltaX < 2 && deltaY == 0) || (deltaX == 0 && deltaY < 2);
     }
 
+    /**
+     * Reduce the character's life when taking damage,
+     * ensuring it does not drop below zero.
+     * @param damage amound damage to be taken
+     */
     public void takeDamage(int damage) {
         this.life -= damage;
         if (this.life < 0) {

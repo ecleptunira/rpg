@@ -23,5 +23,6 @@ public class Stomp extends Skill {
             0.3, 
             getName(), 
             DamageType.PHYSICAL);
+        DamageCalculator.isCritical(attacker);
     }
 }
