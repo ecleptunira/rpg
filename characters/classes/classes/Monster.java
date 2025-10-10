@@ -5,7 +5,6 @@ import project.rpg.characters.classes.jobs.Job;
 import project.rpg.combat.DamageCalculator;
 import project.rpg.combat.DamageType;
 import project.rpg.characters.Character;
-import project.rpg.utils.Information;
 
 public class Monster extends Player{
 
@@ -14,10 +13,6 @@ public class Monster extends Player{
     }
     
     public void attack(Character enemy) {
-        if (!canAttack(enemy)) {
-            Information.outOfRange(this, enemy);
-            return;
-        }
         DamageCalculator.calculateAndApplyDamage(
             this, 
             enemy, 
@@ -28,10 +23,6 @@ public class Monster extends Player{
     }
 
     public void stomp(Character enemy) {
-        if (!canAttack(enemy)) {
-            Information.outOfRange(this, enemy);
-            return;
-        }
         DamageCalculator.calculateAndApplyDamage(
             this, 
             enemy, 

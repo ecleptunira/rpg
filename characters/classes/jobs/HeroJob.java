@@ -23,6 +23,7 @@ public class HeroJob extends Job {
         character.setMagicDefense(10);
 
         character.setCriticalChance(10);
+        character.setCriticalChanceAcumulated(10);
         character.setCriticalDamage(50);
 
         character.setEvasion(10);

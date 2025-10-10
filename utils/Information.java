@@ -27,9 +27,10 @@ public class Information {
      * Display the start message for a battle
      */
     public static void battleStart() {
-        System.out.println("╔===========================================╗");
-        System.out.println("║               BATTLE START!               ║");
-        System.out.println("╚===========================================╝");
+        Logger.capturePrint
+            ("╔===========================================╗\n" + 
+             "║               BATTLE START!               ║\n" +
+             "╚===========================================╝");
     }
 
     /**
@@ -43,9 +44,10 @@ public class Information {
             winnerPhrase = "║               IT'S A DRAW!                ║";
         }
         int totalLength = winnerPhrase.length();
-        System.out.println("╔" + "═".repeat(totalLength - 2) + "╗");
-        System.out.println(winnerPhrase);
-        System.out.println("╚" + "═".repeat(totalLength - 2) + "╝");
+        Logger.capturePrint(
+            "╔" + "═".repeat(totalLength - 2) + "╗\n" + 
+            winnerPhrase + "\n" + 
+            "╚" + "═".repeat(totalLength - 2) + "╝");
     }
 
     /**
@@ -79,20 +81,20 @@ public class Information {
      * @param defender character who is defending
      */
     public static void criticalHit(Character attacker, String hability, int damageDealt, Character defender) {
-        System.out.println(
+        Logger.capturePrint(
             lineBreak1 + "\n" +
-            RED + ">>> CRITICAL HIT! <<<" + RESET + "\n" +
-            YELLOW + attacker.getName() + RESET + " used " 
+
+            RED + ">>> CRITICAL HIT! <<<" + RESET + "\n" 
+
+            + YELLOW + attacker.getName() + RESET + " used " 
             + PURPLE + hability + RESET + " on " 
             + BLUE + defender.getName() + RESET + "!\n"
-        );
 
-        System.out.println(
-            PURPLE + hability + RESET + " unleashed a " 
-            + RED + "CRITICAL power of " + damageDealt + RESET + " points!"
-        );
-        System.out.println(lineBreak1);
-        }
+            + PURPLE + hability + RESET + " unleashed a " 
+            + RED + "CRITICAL power of " + damageDealt + RESET + " points!\n" + 
+
+            lineBreak1);
+    }
 
     /**
      * Display the damage status after an normal attack
@@ -102,17 +104,17 @@ public class Information {
      * @param defender character who is defending
      */
     public static void damageStatus(Character attacker,String hability, int damageDealt, Character defender) {
-        System.out.println(
+        Logger.capturePrint(
             lineBreak1 + "\n" +
+
             YELLOW + attacker.getName() + RESET + " used " 
             + PURPLE + hability + RESET + " on " 
-            + BLUE + defender.getName() + RESET + "!\n"
+            + BLUE + defender.getName() + RESET + "!\n" 
+
+            + PURPLE + hability + RESET + " hit with a power of " 
+            + GREEN + damageDealt + RESET + " points!\n" +
+            lineBreak1
         );
-        System.out.println(
-            PURPLE + hability + RESET + " hit with a power of " 
-            + GREEN + damageDealt + RESET + " points!"
-        );
-        System.out.println(lineBreak1);
     }
 
     /**
@@ -126,17 +128,20 @@ public class Information {
      * Display a message when an attack misses
      */
     public static void damageMissed(Character attacker, String hability, Character defender) {
-        System.out.println
+        Logger.capturePrint
         (lineBreak1 + "\n" 
+
         + YELLOW + attacker.getName() + RESET + " used " 
         + PURPLE + hability + RESET + "!"+
-        "\n" + lineBreak1);
-        
-        System.out.println(PURPLE + hability + RESET + 
+
+        "\n" + lineBreak1 + "\n" + 
+
+        PURPLE + hability + RESET + 
         " missed! No damage dealt to " 
-        + BLUE + defender.getName() + RESET + ".");
-        
-        System.out.println(lineBreak1);
+        + BLUE + defender.getName() + RESET + ".\n" + 
+
+        lineBreak1
+        );
     }
 
     /**
@@ -149,20 +154,26 @@ public class Information {
     /**
      * Display a message when an attack is out of range
      */
-    public static void outOfRange(Character attacker, Character defender) {
-        System.out.println(RED + "Out of range!" + RESET + 
-        " " + attacker.getName() + " cannot reach " + defender.getName() + ".");
-        System.out.println(lineBreak2);
+    public static void outOfRange(String attacker, String defender) {
+        Logger.capturePrint(
+            lineBreak2 + "\n" +
+            
+            RED + "Out of range! " + RESET + attacker + " cannot reach " + defender + ".\n" +
+
+            lineBreak2
+            );
     }
 
     /**
      * Display a message when a character is defeated
      * @param character character who has been defeated
      */
-    public static void characterDead(Character character) {
-        System.out.println("\n" + RED + character.getName() + RESET + 
-        " has been "+ RED +"defeated!" + RESET);
-        System.out.println(lineBreak2);
+    public static void characterDead(String dead) {
+        Logger.capturePrint(
+            lineBreak2 + "\n" +
+            RED + dead + RESET + 
+            " has been "+ RED +"defeated!" + RESET + "\n" +
+            lineBreak2);
     }
 
     /**
@@ -174,6 +185,6 @@ public class Information {
         int filledBars = (int) Math.round(((double) character.getLife() / character.getMaxLife()) * totalBars);
         int emptyBars = totalBars - filledBars;
         String healthBar = "[" + GREEN + "█".repeat(filledBars) + RED + "-".repeat(emptyBars) + RESET + "]";
-        System.out.println(YELLOW + character.getName() + RESET + " Health: " + healthBar + " "+ character.getLife() + "/" + character.getMaxLife() + " HP");
+        Logger.capturePrint(YELLOW + character.getName() + RESET + " Health: " + healthBar + " "+ character.getLife() + "/" + character.getMaxLife() + " HP");
     }
 }

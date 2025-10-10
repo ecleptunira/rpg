@@ -6,6 +6,7 @@ import project.rpg.utils.*;
 
 
 public class Game {
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         Information.limparTela();
         Job assasinClass = new AssasinJob();
@@ -15,12 +16,19 @@ public class Game {
         Assasin assasin = new Assasin("Ezio", assasinClass);
         Hero hero = new Hero ("Arthur", heroClass);
         Monster monster = new Monster("goblin", monsterClass);
+        
 
-        assasin.useSkill("BackStab", monster);
-        hero.useSkill("Divine Sword", monster);
+        hero.useSkill("Basic Attack", monster);
+        hero.useSkill("Basic Attack", monster);
+        hero.useSkill("Basic Attack", monster);
 
-        monster.useSkill("Stomp", hero);
-        monster.useSkill("Basic Attack", assasin);
+        Information.characterDead(monster.getName());
+
+
+        // hero.useSkill("Divine Sword", monster);
+
+        // monster.useSkill("Stomp", hero);
+        // monster.useSkill("Basic Attack", assasin);
         
 
 

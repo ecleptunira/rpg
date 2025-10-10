@@ -2,6 +2,7 @@ package project.rpg.combat;
 
 import project.rpg.characters.Character;
 import project.rpg.utils.Information;
+import project.rpg.utils.Logger;
 
 /**
  * DamageCalculator is a utility class that provides methods to calculate and aplly
@@ -78,13 +79,14 @@ public class DamageCalculator {
      * DEFENSE_SCALE determines the effectiveness of the defense in reducing damage taken.
      * The higher the value, the less effective the defense.
      * Example:
-     * Damage = 100 and DEFENSE_SCALE = 10
-     * Defense 00 --- 100/(1+00/10) = 100/1   = 100 damage taken
-     * Defense 05 --- 100/(1+05/10) = 100/1.5 = 66  damage taken
-     * Defense 10 --- 100/(1+10/10) = 100/2   = 50  damage taken
-     * Defense 20 --- 100/(1+20/10) = 100/3   = 33  damage taken
+     * Damage = 100 and DEFENSE_SCALE = 25.0
+     * Defense Formula: Damage Taken = Damage / (1 + (Defense / DEFENSE_SCALE))
+     * Defense 00  --- 100 / (1 + (00 /25)) = 100/1 = 100 damage taken
+     * Defense 25  --- 100 / (1 + (25 /25)) = 100/2 = 50  damage taken
+     * Defense 50  --- 100 / (1 + (50 /25)) = 100/3 = 33  damage taken
+     * Defense 100 --- 100 / (1 + (100/25)) = 100/5 = 20  damage taken
      */
-    private static final double DEFENSE_SCALE = 10.0;
+    private static final double DEFENSE_SCALE = 25.0;
 
     /**
      * apply defense on the damage recieved
@@ -93,7 +95,9 @@ public class DamageCalculator {
      * @return damage after applying defense
      */
     public static int applyDefense(int damage, int defense){
-        return (int) (damage / (1 + (defense / DEFENSE_SCALE)));
+        if (defense > 100) defense = 100; //capping defense to 100
+        double damageRecieved = damage / (1 + (defense / DEFENSE_SCALE));
+        return (int) damageRecieved;
     }
 
     /**
@@ -125,6 +129,12 @@ public class DamageCalculator {
     public static void calculateAndApplyDamage( Character attacker, Character defensor, 
                                                 double baseDamageFactor, double bonusDamageFactor, 
                                                 String hability, DamageType damageType) {
+
+        if(attacker.canAttack(defensor) == false) {
+            Information.outOfRange(attacker.getName(), defensor.getName());
+            return;
+        }
+        
         // 1 - check if is a miss
         if (willHit(attacker, defensor)) {
             Information.damageMissed(attacker, hability, defensor);
@@ -151,8 +161,16 @@ public class DamageCalculator {
         }else {
             Information.damageStatus(attacker, hability, damageDealt, defensor);
         }
+
         // 5 = apply the damage on the defensor and show his health
         defensor.takeDamage(damageDealt);
         Information.showHealth(defensor);
+
+        Logger.debug("Damage calculation: Attacker=" + attacker.getName()
+        + ", Defender=" + defensor.getName()
+        + ", Type=" + damageType
+        + ", Base=" + baseDamage
+        + ", Defense=" + defensor.getPhysicalDefense()
+        + ", Final=" + damageDealt);
     }
 }

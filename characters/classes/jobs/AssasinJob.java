@@ -15,10 +15,14 @@ public class AssasinJob extends Job {
     public void applyClassStats(Character character) {
         character.setPhysicalDamage(45);
 
+        character.setPhysicalDefense(10);
+        character.setMagicDefense(10);
+
         character.setLife(100);
         character.setMaxLife(100);
 
         character.setCriticalChance(25);
+        character.setCriticalChanceAcumulated(25);
         character.setCriticalDamage(100);
 
         character.setEvasion(25);
