@@ -3,6 +3,7 @@ package project.rpg.characters;
 import project.rpg.utils.Direction;
 import project.rpg.characters.classes.jobs.Job;
 import project.rpg.characters.skills.Skill;
+import project.rpg.combat.DamageCalculator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,6 +63,10 @@ public abstract class Character {
         if (this.life < 0) {
             this.life = 0;
         }
+    }
+
+    public boolean isAlive(){
+        return this.life > 0;
     }
 
     public String toString() {
@@ -130,6 +135,9 @@ public abstract class Character {
         this.magicDamage = magicDamage;
     }
 
+    public int getPercentPhysicalDefense(){
+        return (int) (100 / (1 + (this.physicalDefense / 25.0)));
+    }
     public int getPhysicalDefense(){
         return physicalDefense;
     }
@@ -137,6 +145,9 @@ public abstract class Character {
         this.physicalDefense = physicalDefense;
     }
 
+    public int getPercentMagicDefense(){
+        return (int) (100 / (1 + (this.magicDefense / 25.0)));
+    }
     public int getMagicDefense(){
         return magicDefense;
     }

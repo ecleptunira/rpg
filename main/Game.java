@@ -17,19 +17,21 @@ public class Game {
         Hero hero = new Hero ("Arthur", heroClass);
         Monster monster = new Monster("goblin", monsterClass);
         
+        Information.battleStart();
+        hero.useSkill("Basic Attack", monster); 
+        hero.useSkill("Basic Attack", monster); 
+        hero.setCriticalChanceAcumulated(100);
+        hero.useSkill("Basic Attack", monster); 
 
-        hero.useSkill("Basic Attack", monster);
-        hero.useSkill("Basic Attack", monster);
-        hero.useSkill("Basic Attack", monster);
 
-        Information.characterDead(monster.getName());
 
 
         // hero.useSkill("Divine Sword", monster);
-
+        
         // monster.useSkill("Stomp", hero);
         // monster.useSkill("Basic Attack", assasin);
-        
+        // assasin.useSkill("Backstab", monster);
+        // Information.battleOver("DRAW");
 
 
 

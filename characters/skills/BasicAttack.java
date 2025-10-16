@@ -20,8 +20,8 @@ public class BasicAttack extends Skill{
         DamageCalculator.calculateAndApplyDamage(
             attacker, 
             defensor, 
-            1, // 0.75
-            0, //0.25
+            0.75,
+            0.25,
             getName(), 
             DamageType.PHYSICAL);
     }

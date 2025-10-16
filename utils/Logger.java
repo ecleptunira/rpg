@@ -10,14 +10,14 @@ public class Logger {
 
     private static final String LOG_FILE = "project/rpg/utils/logs/game_log.txt";
     private static final boolean ENABLE_CONSOLE = false;
-    private static final boolean ENABLE_FORMAT = false;
+    private static final boolean ENABLE_FORMAT = true;
     private static final boolean ENABLE_FILE = true;
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     public static void log(String message) {
         String timestamp = LocalDateTime.now().format(FORMATTER);
-        String logMessage = "[" + timestamp + "] \n" + message;
+        String logMessage = "[" + timestamp + "] " + message;
 
         if (ENABLE_CONSOLE) {
             System.out.println(message);
@@ -38,7 +38,9 @@ public class Logger {
     }
     
     public static void capturePrint(String message) {
-        System.out.println(message);
+        if (!ENABLE_CONSOLE){
+            System.out.println(message);
+        }
         log(message.replaceAll("\\u001B\\[[;\\d]*m", ""));
     }
 
