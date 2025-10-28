@@ -20,6 +20,7 @@ public class DamageCalculator {
      */
     public static boolean isCritical(Character attacker){
         double critChance = attacker.getCriticalChanceAcumulated();
+
         if (Math.random() * 100 < critChance) {
             // if is a critical hit, reset acumulated chance
             attacker.setCriticalChanceAcumulated(attacker.getCriticalChance());
@@ -43,7 +44,7 @@ public class DamageCalculator {
     public static int applyCritical(Character attacker, int damageDealt){
         int damageDealtBefore = damageDealt;
         damageDealt = (int) (damageDealt * (1 + (attacker.getCriticalDamage() / 100.0)));
-        Logger.info("APPLYCRITICAL -> Attacker: " + attacker.getName() + " | Crit mod: " + attacker.getCriticalDamage() + "%" + 
+        Logger.info("APPLYCRITICAL -> Attacker: " + attacker.getName() + " | Crit damage: " + attacker.getCriticalDamage() + "%" + 
                     " | Damage before: " + damageDealtBefore + " | New damage: " + damageDealt);
         return damageDealt;
     }
@@ -62,14 +63,15 @@ public class DamageCalculator {
      */
     public static double levelDifference(Character attacker, Character defender){
         int levelDiff = attacker.getLevel() - defender.getLevel();
+        double factor = 1.0;
+        String log = "LEVELDIFFERENCE -> Attacker: " + attacker.getLevel() + " | Defender: " + defender.getLevel() + " | Factor(x0.5 ~ x2): x";
 
         // within ±5 levels -> no change
         if (Math.abs(levelDiff) <= 5) {
-            Logger.info("LEVELDIFFERENCE -> attacker: " + attacker.getLevel() + " | defender: " + defender.getLevel() + " | factor: x1.0");
+            Logger.info(log + factor);
             return 1.0;
         }
 
-        double factor;
         // attacker is stronger: +10% per level beyond 5
         if (levelDiff > 5) {
             factor = 1.0 + (levelDiff - 5) * 0.10; // +0.1 per extra level
@@ -83,7 +85,7 @@ public class DamageCalculator {
         // clamp to sensible bounds: [0.5, 2.0]
         if (factor < 0.5) factor = 0.5;
         if (factor > 2.0) factor = 2.0;
-        Logger.info("LEVELDIFFERENCE -> attacker: " + attacker.getLevel() + " | defender: " + defender.getLevel() + " | factor: x" + factor);
+        Logger.info(log + factor);
 
         return factor;
     }
@@ -112,7 +114,7 @@ public class DamageCalculator {
     public static int applyDefense(int damage, int defense, int percentDefense){
         if (defense > 100) defense = 100; //capping defense to 100
         double damageRecieved = damage / (1 + (defense / DEFENSE_SCALE));
-        Logger.info("APPLYDEFENSE -> Damage before: " + damage + " | Defense reduction: " + percentDefense + "% | Damage after: " + (int)damageRecieved);
+        Logger.info("APPLYDEFENSE -> Damage pre-mitigation: " + damage + " | Damage reduction: " + percentDefense + "% | Damage recieved: " + (int)damageRecieved);
         return (int) damageRecieved;
     }
 
@@ -122,11 +124,13 @@ public class DamageCalculator {
      */
     public static boolean willHit(Character attacker, Character defender){
         double hitChance =  defender.getEvasion() - attacker.getAccuracy();
+        double randomValue = Math.random() * 100;
+
+        Logger.info("WILLHIT? -> (Defender evasion: " + defender.getEvasion() + " - Attacker accuracy: " + attacker.getAccuracy() + 
+                    ") = " + hitChance + " | Hit chance: 5 ~ 95%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
+
         if (hitChance < 5 ) hitChance = 5; // Minimum hit chance of 5%
         if (hitChance > 95) hitChance = 95; // Maximum hit chance of 95%
-        double randomValue = Math.random() * 100;
-        Logger.info("WILLHIT? -> Defender evasion: " + defender.getEvasion() + " | Attacker accuracy: " + attacker.getAccuracy() + 
-                    " | Hit chance: " + hitChance + "%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
         return  randomValue < hitChance;
     }
 
@@ -149,7 +153,7 @@ public class DamageCalculator {
                                                 String hability, DamageType damageType) {
         // preliminary checks
         // 0 - check if the attacker is in range
-        Logger.info("CALCULATE AND APPLY DAMAGE");
+        Logger.log("BEGGIN CALCULATE AND APLLY DAMAGE");
         boolean canAttack = attacker.canAttack(defensor);
         if(!canAttack) {
             Information.outOfRange(attacker.getName(), defensor.getName());
@@ -196,20 +200,20 @@ public class DamageCalculator {
             Information.characterDead(defensor.getName());
         }
 
-        Logger.info("================ DAMAGE CALCULATION ================");
-        Logger.info("Attacker: " + attacker.getName() + " (Level " + attacker.getLevel() + ") - " + 
+        Logger.debug("================ DAMAGE CALCULATION ================");
+        Logger.debug("Attacker: " + attacker.getName() + " (Level " + attacker.getLevel() + ") - " + 
                     "Defender: " + defensor.getName() + " (Level " + defensor.getLevel() + ")");
-        Logger.info("Damage Type: " + typeOfDamage + " | Base Damage " + baseDamage + " | Variable Damage (Random): " + variableDamage);
-        Logger.info("Critical damage: " + attacker.getCriticalDamage() + "% | Critical Chance: " + 
+        Logger.debug("Damage Type: " + typeOfDamage + " | Base Damage " + baseDamage + " + Variable Damage (Random): " + variableDamage);
+        Logger.debug("Critical damage: " + attacker.getCriticalDamage() + "% | Critical Chance: " + 
                     (attacker.getCriticalChanceAcumulated() > attacker.getCriticalChance() ? attacker.getCriticalChanceAcumulated() : attacker.getCriticalChance()) + "%");
-        Logger.info("Damage pre-mitigation: " + (baseDamage + variableDamage));
-        Logger.info("Level Difference Multiplier: " + String.format("%.1f", levelDifference) + " | Critical Hit: " + (isCritical ? "Yes" : "No"));
-        Logger.info(typeOfDamage + " defense used " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicDefense())
+        Logger.debug("Damage pre-mitigation: " + (baseDamage + variableDamage));
+        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", levelDifference) + " | Critical Hit: " + (isCritical ? "Yes" : "No"));
+        Logger.debug(typeOfDamage + " defense used " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicDefense())
                     + " | Damage reduction scale: " + 
                     (damageType == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
-        Logger.info("Calculation steps: Damage Dealt = (base + variable) * levelDiff -> " + ((baseDamage + variableDamage)*levelDifference) + 
+        Logger.debug("Calculation steps: Damage Dealt = base + variable = "+ (baseDamage+variableDamage) +" * levelDiff -> " + ((baseDamage + variableDamage)*levelDifference) + 
                     " -> apply defense -> " + damageReduction + " -> apply critical -> " +
                     (isCritical ? "x" + (1 + (attacker.getCriticalDamage() / 100.0)) : "no critical"));
-        Logger.info("Final Damage: " + damageDealt);
+        Logger.debug("Final Damage: " + damageDealt);
     }
 }

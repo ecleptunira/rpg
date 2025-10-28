@@ -28,11 +28,11 @@ public class MonsterJob extends Job {
         character.setEvasion(5);
         character.setAccuracy(15);
 
-        character.setBlock(15);
-        character.setBlockReduction(15);
-        character.setParry(10);
-        character.setParryReduction(10);
-        character.setParryCounterChance(20);
+        // character.setBlock(15);
+        // character.setBlockReduction(15);
+        // character.setParry(10);
+        // character.setParryReduction(10);
+        // character.setParryCounterChance(20);
     }
 
 }

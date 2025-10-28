@@ -3,7 +3,6 @@ package project.rpg.characters;
 import project.rpg.utils.Direction;
 import project.rpg.characters.classes.jobs.Job;
 import project.rpg.characters.skills.Skill;
-import project.rpg.combat.DamageCalculator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,17 +25,17 @@ public abstract class Character {
     private int posY = 0;                // position on Y axis
 
     private int criticalChance = 0;                        // percentage chance to land a critical hit
-    private int criticalChanceAcumulated = criticalChance; // acumulated critical chance for next attack
+    private int criticalChanceAcumulated = 0;              // acumulated critical chance for next attack
     private int criticalDamage = 50;                       // percentage increase in damage on a critical hit
 
     private int evasion = 0;              // percentage chance to evade an attack
     private int accuracy = 0;             // percentage chance to hit an attack
 
-    private int block = 0;                // percentage chance to block an attack
-    private int blockReduction = 0;       // percentage of damage reduction when a block is successful
-    private int parry = 0;                // percentage chance to parry an attack
-    private int parryReduction = 0;       // percentage of damage reduction when a parry is successful
-    private int parryCounterChance = 0;   // percentage chance to counterattack after a successful parry
+    // private int block = 0;                // percentage chance to block an attack
+    // private int blockReduction = 0;       // percentage of damage reduction when a block is successful
+    // private int parry = 0;                // percentage chance to parry an attack
+    // private int parryReduction = 0;       // percentage of damage reduction when a parry is successful
+    // private int parryCounterChance = 0;   // percentage chance to counterattack after a successful parry
 
     protected Character(String name, Job choosenClass) {
         this.name = name;
@@ -81,7 +80,7 @@ public abstract class Character {
         "\n | Critical Damage: " + criticalDamage + "%" +
         "\n | Evasion: " + evasion + "%" +
         "\n | Accuracy: " + accuracy + "%" +
-        "\n | Block: " + block + "%" + 
+        //"\n | Block: " + block + "%" + 
         "\n | Position: (" + posX + ", " + posY + ")" +
         "\n | Skills: " + skills.stream().map(Skill::getName).collect(Collectors.joining(", "));
     }
@@ -136,7 +135,7 @@ public abstract class Character {
     }
 
     public int getPercentPhysicalDefense(){
-        return (int) (100 / (1 + (this.physicalDefense / 25.0)));
+        return (int) Math.abs((100 / (1 + (this.physicalDefense / 25.0)))-100);
     }
     public int getPhysicalDefense(){
         return physicalDefense;
@@ -146,7 +145,7 @@ public abstract class Character {
     }
 
     public int getPercentMagicDefense(){
-        return (int) (100 / (1 + (this.magicDefense / 25.0)));
+        return (int) Math.abs((100 / (1 + (this.magicDefense / 25.0)))-100);
     }
     public int getMagicDefense(){
         return magicDefense;
@@ -218,39 +217,39 @@ public abstract class Character {
         this.accuracy = accuracy;
     }
 
-    public int getBlock() {
-        return block;
-    }
-    public void setBlock(int block) {
-        this.block = block;
-    }
+    // public int getBlock() {
+    //     return block;
+    // }
+    // public void setBlock(int block) {
+    //     this.block = block;
+    // }
 
-    public int getBlockReduction() {
-        return blockReduction;
-    }
-    public void setBlockReduction(int blockReduction) {
-        this.blockReduction = blockReduction;
-    }
+    // public int getBlockReduction() {
+    //     return blockReduction;
+    // }
+    // public void setBlockReduction(int blockReduction) {
+    //     this.blockReduction = blockReduction;
+    // }
 
-    public int getParry() {
-        return parry;
-    }
-    public void setParry(int parry) {
-        this.parry = parry;
-    }
+    // public int getParry() {
+    //     return parry;
+    // }
+    // public void setParry(int parry) {
+    //     this.parry = parry;
+    // }
 
-    public int getParryReduction() {
-        return parryReduction;
-    }
-    public void setParryReduction(int parryReduction) {
-        this.parryReduction = parryReduction;
-    }
+    // public int getParryReduction() {
+    //     return parryReduction;
+    // }
+    // public void setParryReduction(int parryReduction) {
+    //     this.parryReduction = parryReduction;
+    // }
 
-    public int getParryCounterChance() {
-        return parryCounterChance;
-    }
-    public void setParryCounterChance(int parryCounterChance) {
-        this.parryCounterChance = parryCounterChance;
-    }
+    // public int getParryCounterChance() {
+    //     return parryCounterChance;
+    // }
+    // public void setParryCounterChance(int parryCounterChance) {
+    //     this.parryCounterChance = parryCounterChance;
+    // }
 
 }

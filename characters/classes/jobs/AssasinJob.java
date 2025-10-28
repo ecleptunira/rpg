@@ -28,9 +28,9 @@ public class AssasinJob extends Job {
         character.setEvasion(25);
         character.setAccuracy(20);
 
-        character.setParry(15);
-        character.setParryReduction(20);
-        character.setParryCounterChance(50);
+        // character.setParry(15);
+        // character.setParryReduction(20);
+        // character.setParryCounterChance(50);
     }
 
 }

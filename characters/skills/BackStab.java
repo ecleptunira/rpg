@@ -19,8 +19,8 @@ public class BackStab extends Skill{
         DamageCalculator.calculateAndApplyDamage(
             attacker, 
             defensor, 
-            1, 
-            1.5, 
+            1.3, 
+            0.7, 
             getName(), 
             DamageType.PHYSICAL);
     }

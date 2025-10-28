@@ -29,11 +29,11 @@ public class HeroJob extends Job {
         character.setEvasion(10);
         character.setAccuracy(15);
 
-        character.setBlock(10);
-        character.setBlockReduction(25);
-        character.setParry(20);
-        character.setParryReduction(20);
-        character.setParryCounterChance(30);
+        // character.setBlock(10);
+        // character.setBlockReduction(25);
+        // character.setParry(20);
+        // character.setParryReduction(20);
+        // character.setParryCounterChance(30);
     }
     
 }

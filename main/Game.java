@@ -15,36 +15,26 @@ public class Game {
 
         Assasin assasin = new Assasin("Ezio", assasinClass);
         Hero hero = new Hero ("Arthur", heroClass);
-        Monster monster = new Monster("goblin", monsterClass);
+        Monster monster = new Monster("Goblin", monsterClass);
         
         Information.battleStart();
-        hero.useSkill("Basic Attack", monster); 
-        hero.useSkill("Basic Attack", monster); 
-        hero.setCriticalChanceAcumulated(100);
-        hero.useSkill("Basic Attack", monster); 
+        assasin.setCriticalChance(100);
+        assasin.setCriticalChanceAcumulated(100);
 
-
-
-
-        // hero.useSkill("Divine Sword", monster);
+        monster.setMaxLife(1000);
+        monster.setLife(1000);
         
-        // monster.useSkill("Stomp", hero);
+        monster.setPhysicalDefense(0);
+        monster.setLevel(1);
+
+        
+        
+        
         // monster.useSkill("Basic Attack", assasin);
         // assasin.useSkill("Backstab", monster);
-        // Information.battleOver("DRAW");
+        // hero.useSkill("Divine Sword", monster);
+        // monster.useSkill("Stomp", hero);
 
 
-
-
-
-
-
-        // Information.battleOver(heroWins == monsterWins ? "DRAW" : heroWins > monsterWins ? hero.getName() : monster.getName());
-        // System.out.println("Total fights: " + fights);
-        // System.out.println(hero.getName() + " wins: " + heroWins);
-        // System.out.println(monster.getName() + " wins: " + monsterWins);
-        // System.out.println("Draws: " + (fights - (heroWins + monsterWins)));
-        // System.out.println("========================================\n\n\n");
-        
     }
 }
