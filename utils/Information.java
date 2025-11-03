@@ -173,4 +173,25 @@ public class Information {
         String healthBar = "[" + GREEN + "█".repeat(filledBars) + RED + "-".repeat(emptyBars) + RESET + "]";
         Logger.capturePrint(YELLOW + character.getName() + RESET + " Health: " + healthBar + " "+ character.getLife() + "/" + character.getMaxLife() + " HP");
     }
+
+    public static void showExperience(Character character){
+        int totalBars = 20;
+        int filledBars = (int) Math.round(((double) 
+            (character.getExperience() > character.getExperienceToNextLevel() ? character.getExperienceToNextLevel() : character.getExperience())
+            / character.getExperienceToNextLevel()) * totalBars);
+        int emptyBars = totalBars - filledBars;
+        String experienceBar = "[" + CYAN + "█".repeat(filledBars) + GREEN + "-".repeat(emptyBars) + RESET + "]";
+        Logger.capturePrint(YELLOW + character.getName() + RESET + " Experience: " + experienceBar + " "+ character.getExperience() + "/" + character.getExperienceToNextLevel() + " XP");
+    }
+
+    public static void levelUp(Character character){
+        Logger.capturePrint(YELLOW + character.getName() + RESET + " reached level " + CYAN + character.getLevel() + RESET + "!");
+        Logger.debug(character.getName() + " has leveled up to " + character.getLevel() + 
+        ". Next level at " + character.getExperienceToNextLevel() + " XP.");
+    }
+
+    public static void gainExperience(Character character, int amount){
+        Logger.capturePrint(YELLOW + character.getName() + RESET + " gained " + CYAN + amount + RESET + " experience points.");
+        Logger.debug("New experience total: " + character.getExperience() + "/" + character.getExperienceToNextLevel());
+    }
 }

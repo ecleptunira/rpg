@@ -7,6 +7,7 @@ import project.rpg.characters.skills.BackStab;
 public class AssasinJob extends Job {
 
     public AssasinJob(){
+        this.name = "Assassin";
         skills.add(new BasicAttack("Basick Attack", "Simple physical attack"));
         skills.add(new BackStab("BackStab", "A powerful attack from the shadows"));
     }

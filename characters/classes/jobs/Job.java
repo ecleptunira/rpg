@@ -29,4 +29,5 @@ public abstract class Job {
         }
         System.out.println("Skill " + skillName + " não encontrada para " + name);
     }
+
 }

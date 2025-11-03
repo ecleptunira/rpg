@@ -1,8 +1,10 @@
 package project.rpg.characters;
 
 import project.rpg.utils.Direction;
+import project.rpg.utils.Information;
 import project.rpg.characters.classes.jobs.Job;
 import project.rpg.characters.skills.Skill;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +12,12 @@ import java.util.stream.Collectors;
 public abstract class Character {
     private List<Skill> skills = new ArrayList<>();
 
-    private String name;                 // name of the character
-    private int level = 1;               // level of the character
+    private String name;                        // name of the character
+    private int level = 1;                      // level of the character
+    private int experience = 0;              // experience points
+    private int experienceToNextLevel = 100; // experience needed for next level
+    
+
     private int physicalDamage = 1;      // base physical damage
     private int magicDamage = 1;         // base magic damage
 
@@ -30,12 +36,6 @@ public abstract class Character {
 
     private int evasion = 0;              // percentage chance to evade an attack
     private int accuracy = 0;             // percentage chance to hit an attack
-
-    // private int block = 0;                // percentage chance to block an attack
-    // private int blockReduction = 0;       // percentage of damage reduction when a block is successful
-    // private int parry = 0;                // percentage chance to parry an attack
-    // private int parryReduction = 0;       // percentage of damage reduction when a parry is successful
-    // private int parryCounterChance = 0;   // percentage chance to counterattack after a successful parry
 
     protected Character(String name, Job choosenClass) {
         this.name = name;
@@ -64,6 +64,53 @@ public abstract class Character {
         }
     }
 
+    /**
+     * Heal the character by a especific amount,
+     * ensuring life does not exceed maxLife.
+     * @param amount amount to heal
+     */
+    public void heal(int amount){
+        this.life += amount;
+        if (this.life > this.maxLife) {
+            this.life = this.maxLife;
+        }
+    }
+
+    /**
+     * Restore the character's life to full capacity.
+     */
+    public void restoreLifeToFull(){
+        this.life = this.maxLife;
+    }
+
+    /**
+     * Increase character's experience points
+     * @param amount Amount of experience to be gained
+     */
+    public void gainExperience(int amount){
+        this.experience += amount;
+        Information.gainExperience(this, amount);
+        Information.showExperience(this);
+        while (this.experience >= this.experienceToNextLevel){
+            levelUp();
+        }
+    }
+
+    /**
+     * level up the character.
+     */
+    public void levelUp(){
+        this.level += 1;
+        this.experience -= this.experienceToNextLevel;
+        this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
+        Information.levelUp(this);
+        Information.showExperience(this);
+    }
+
+    /**
+     * Check if the character is alive
+     * @return true if is alive and false if is dead
+     */
     public boolean isAlive(){
         return this.life > 0;
     }
@@ -80,7 +127,6 @@ public abstract class Character {
         "\n | Critical Damage: " + criticalDamage + "%" +
         "\n | Evasion: " + evasion + "%" +
         "\n | Accuracy: " + accuracy + "%" +
-        //"\n | Block: " + block + "%" + 
         "\n | Position: (" + posX + ", " + posY + ")" +
         "\n | Skills: " + skills.stream().map(Skill::getName).collect(Collectors.joining(", "));
     }
@@ -118,6 +164,20 @@ public abstract class Character {
     }
     public void setLevel(int level){
         this.level = level;
+    }
+
+    public double getExperience(){
+        return experience;
+    }
+    public void setExperience(int experience){
+        this.experience = experience;
+    }
+
+    public double getExperienceToNextLevel(){
+        return experienceToNextLevel;
+    }
+    public void setExperienceToNextLevel(int experienceToNextLevel){
+        this.experienceToNextLevel = experienceToNextLevel;
     }
 
     public int getPhysicalDamage() {
@@ -216,40 +276,5 @@ public abstract class Character {
     public void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
     }
-
-    // public int getBlock() {
-    //     return block;
-    // }
-    // public void setBlock(int block) {
-    //     this.block = block;
-    // }
-
-    // public int getBlockReduction() {
-    //     return blockReduction;
-    // }
-    // public void setBlockReduction(int blockReduction) {
-    //     this.blockReduction = blockReduction;
-    // }
-
-    // public int getParry() {
-    //     return parry;
-    // }
-    // public void setParry(int parry) {
-    //     this.parry = parry;
-    // }
-
-    // public int getParryReduction() {
-    //     return parryReduction;
-    // }
-    // public void setParryReduction(int parryReduction) {
-    //     this.parryReduction = parryReduction;
-    // }
-
-    // public int getParryCounterChance() {
-    //     return parryCounterChance;
-    // }
-    // public void setParryCounterChance(int parryCounterChance) {
-    //     this.parryCounterChance = parryCounterChance;
-    // }
 
 }

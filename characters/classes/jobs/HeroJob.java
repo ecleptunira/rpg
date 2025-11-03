@@ -7,6 +7,7 @@ import project.rpg.characters.skills.DivineSword;
 public class HeroJob extends Job {
 
     public HeroJob() {
+        this.name = "Hero";
         skills.add(new BasicAttack("Basick Attack", "Simple physical attack"));
         skills.add(new DivineSword("Divine Sword", "A powerful divine slash."));
     }

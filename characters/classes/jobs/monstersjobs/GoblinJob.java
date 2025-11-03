@@ -1,13 +1,14 @@
-package project.rpg.characters.classes.jobs;
+package project.rpg.characters.classes.jobs.monstersjobs;
 
 import project.rpg.characters.Character;
 import project.rpg.characters.skills.BasicAttack;
 import project.rpg.characters.skills.Stomp;
+import project.rpg.characters.classes.jobs.monstersjobs.*;
 
-public class MonsterJob extends Job {
+public class GoblinJob extends MonsterJob{
 
-    public MonsterJob() {
-        skills.add(new BasicAttack("Basick Attack", "Simple physical attack"));
+    public GoblinJob() {
+        this.name = "Goblin";
         skills.add(new Stomp("Stomp", "A heavy stomp that shakes the ground."));
     }
 
@@ -28,11 +29,7 @@ public class MonsterJob extends Job {
         character.setEvasion(5);
         character.setAccuracy(15);
 
-        // character.setBlock(15);
-        // character.setBlockReduction(15);
-        // character.setParry(10);
-        // character.setParryReduction(10);
-        // character.setParryCounterChance(20);
+        //monstersjobs.setBaseExp(5);
     }
 
 }
