@@ -15,7 +15,7 @@ public class HeroJob extends Job {
     @Override
     public void applyClassStats(Character character) {
         character.setPhysicalDamage(40);
-        character.setMagicDamage(20);
+        character.setMagicalDamage(20);
 
         character.setMaxLife(200);
         character.setLife(200);

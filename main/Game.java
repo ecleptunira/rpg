@@ -23,8 +23,8 @@ public class Game {
         
         Information.battleStart();
         
-
-        Logger.capturePrint(monster);
+        String a = monster.toString();
+        Logger.capturePrint(a);
 
         
 

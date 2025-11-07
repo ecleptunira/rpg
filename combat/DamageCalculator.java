@@ -166,8 +166,8 @@ public class DamageCalculator {
         }
 
         // 2 - calculate the variation of the damage
-        int baseDamage = (int) (attacker.getPhysicalDamage() * baseDamageFactor);
-        int bonusDamage = (int) (attacker.getPhysicalDamage() * bonusDamageFactor);
+        int baseDamage = (int) (attacker.getPhysicalDamage() * baseDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
+        int bonusDamage = (int) (attacker.getPhysicalDamage() * bonusDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
         int variableDamage = (int) (Math.random() * (bonusDamage + 1));
         double levelDifference = levelDifference(attacker, defensor);
         int damageDealt  = (int) ((baseDamage + variableDamage) * levelDifference);

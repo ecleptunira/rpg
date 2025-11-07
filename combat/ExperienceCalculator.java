@@ -5,9 +5,7 @@ public class ExperienceCalculator {
 
     public static double expFactor(Character attacker, Character defender){
         int levelDifference = defender.getLevel() - attacker.getLevel();
-        // if (levelDifference >= 15) {
-        //     return 2.0;
-        // }
+        
         if (levelDifference <= -15) {
             return 0.1;
         }
@@ -22,6 +20,7 @@ public class ExperienceCalculator {
         return 1.0;
     }
 
+    @SuppressWarnings("unused")
     public static int calculateExperience(Character attacker, Character defender){
         double factor = expFactor(attacker, defender);
         

@@ -19,7 +19,7 @@ public abstract class Character {
     
 
     private int physicalDamage = 1;      // base physical damage
-    private int magicDamage = 1;         // base magic damage
+    private int magicalDamage = 1;         // base magic damage
 
     private int physicalDefense = 0;     //base physical defense
     private int magicDefense = 0;        // base magic defense
@@ -120,7 +120,7 @@ public abstract class Character {
         "\n Name: " + name + " | Level: " + level +
         "\n | Life: " + life + "/" + maxLife +
         "\n | Physical Damage: " + physicalDamage +
-        "\n | Magic Damage: " + magicDamage + 
+        "\n | Magic Damage: " + magicalDamage + 
         "\n | Physical defense: " + physicalDefense +
         "\n | Magic defense: " + magicDefense +
         "\n | Critical Chance: " + criticalChance + "%" +
@@ -187,11 +187,11 @@ public abstract class Character {
         this.physicalDamage = physicalDamage;
     }
 
-    public int getMagicDamage() {
-        return magicDamage;
+    public int getMagicalDamage() {
+        return magicalDamage;
     }
-    public void setMagicDamage(int magicDamage) {
-        this.magicDamage = magicDamage;
+    public void setMagicalDamage(int magicalDamage) {
+        this.magicalDamage = magicalDamage;
     }
 
     public int getPercentPhysicalDefense(){
