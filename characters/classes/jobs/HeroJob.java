@@ -1,8 +1,7 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
-import project.rpg.characters.skills.BasicAttack;
-import project.rpg.characters.skills.DivineSword;
+import project.rpg.characters.skills.*;
 
 public class HeroJob extends Job {
 
@@ -10,6 +9,7 @@ public class HeroJob extends Job {
         this.name = "Hero";
         skills.add(new BasicAttack("Basick Attack", "Simple physical attack"));
         skills.add(new DivineSword("Divine Sword", "A powerful divine slash."));
+        skills.add(new FireBall("FireBall", "A ball of fire that burns the enemy."));
     }
 
     @Override

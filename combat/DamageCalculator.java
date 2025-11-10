@@ -127,7 +127,7 @@ public class DamageCalculator {
         double randomValue = Math.random() * 100;
 
         Logger.info("WILLHIT? -> (Defender evasion: " + defender.getEvasion() + " - Attacker accuracy: " + attacker.getAccuracy() + 
-                    ") = " + hitChance + " | Hit chance: 5 ~ 95%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
+                    ") = " + (hitChance < 0 ? 0 : hitChance) + " | Hit chance: 5 ~ 95%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
 
         if (hitChance < 5 ) hitChance = 5; // Minimum hit chance of 5%
         if (hitChance > 95) hitChance = 95; // Maximum hit chance of 95%
@@ -145,7 +145,7 @@ public class DamageCalculator {
      * @param defensor character who is defending
      * @param baseDamageFactor minimum damage factor
      * @param bonusDamageFactor maximum damage factor
-     * @param hability name of the hability ysed
+     * @param hability name of the hability used
      * @param damageType type of damage
      */
     public static void calculateAndApplyDamage( Character attacker, Character defensor, 
@@ -153,7 +153,7 @@ public class DamageCalculator {
                                                 String hability, DamageType damageType) {
         // preliminary checks
         // 0 - check if the attacker is in range
-        Logger.log("BEGGIN CALCULATE AND APLLY DAMAGE");
+        Logger.log("--- BEGGIN CALCULATE AND APLLY DAMAGE ---");
         boolean canAttack = attacker.canAttack(defensor);
         if(!canAttack) {
             Information.outOfRange(attacker.getName(), defensor.getName());
@@ -166,8 +166,11 @@ public class DamageCalculator {
         }
 
         // 2 - calculate the variation of the damage
-        int baseDamage = (int) (attacker.getPhysicalDamage() * baseDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
-        int bonusDamage = (int) (attacker.getPhysicalDamage() * bonusDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
+        int baseDamage = (int) (damageType == DamageType.PHYSICAL ? attacker.getPhysicalDamage() : attacker.getMagicalDamage() * baseDamageFactor);
+        int bonusDamage = (int) (damageType == DamageType.PHYSICAL ? attacker.getPhysicalDamage() : attacker.getMagicalDamage() * bonusDamageFactor);
+
+        //int baseDamage = (int) (attacker.getPhysicalDamage() * baseDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
+        // int bonusDamage = (int) (attacker.getPhysicalDamage() * bonusDamageFactor); // CORRIGIR PARA INCLUIR MAGIC DAMAGE
         int variableDamage = (int) (Math.random() * (bonusDamage + 1));
         double levelDifference = levelDifference(attacker, defensor);
         int damageDealt  = (int) ((baseDamage + variableDamage) * levelDifference);
@@ -175,15 +178,28 @@ public class DamageCalculator {
         // 3 - aplly the defense based on the damage type
         String typeOfDamage = "Unknown";
         int damageReduction = 0;
-        if (damageType == DamageType.PHYSICAL){
-            damageDealt = applyDefense(damageDealt, defensor.getPhysicalDefense(), defensor.getPercentPhysicalDefense());
-            damageReduction = damageDealt;
-            typeOfDamage = "Physical";
-        } else if (damageType == DamageType.MAGICAL){
-            damageDealt = applyDefense(damageDealt, defensor.getMagicDefense(), defensor.getPercentMagicDefense());
-            damageReduction = damageDealt;
-            typeOfDamage = "Magical";
+
+        switch (damageType){
+            case PHYSICAL:
+                damageDealt = applyDefense(damageDealt, defensor.getPhysicalDefense(), defensor.getPercentPhysicalDefense());
+                damageReduction = damageDealt;
+                typeOfDamage = "Physical";
+                break;
+            case MAGICAL:
+                damageDealt = applyDefense(damageDealt, defensor.getMagicDefense(), defensor.getPercentMagicDefense());
+                damageReduction = damageDealt;
+                typeOfDamage = "Magical";
+                break;
         }
+        // if (damageType == DamageType.PHYSICAL){
+        //     damageDealt = applyDefense(damageDealt, defensor.getPhysicalDefense(), defensor.getPercentPhysicalDefense());
+        //     damageReduction = damageDealt;
+        //     typeOfDamage = "Physical";
+        // } else if (damageType == DamageType.MAGICAL){
+        //     damageDealt = applyDefense(damageDealt, defensor.getMagicDefense(), defensor.getPercentMagicDefense());
+        //     damageReduction = damageDealt;
+        //     typeOfDamage = "Magical";
+        // }
         // 4 - check if is a critical hit
         boolean isCritical = isCritical(attacker);
         if (isCritical){
@@ -208,7 +224,7 @@ public class DamageCalculator {
                     (attacker.getCriticalChanceAcumulated() > attacker.getCriticalChance() ? attacker.getCriticalChanceAcumulated() : attacker.getCriticalChance()) + "%");
         Logger.debug("Damage pre-mitigation: " + (baseDamage + variableDamage));
         Logger.debug("Level Difference Multiplier: " + String.format("%.1f", levelDifference) + " | Critical Hit: " + (isCritical ? "Yes" : "No"));
-        Logger.debug(typeOfDamage + " defense used " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicDefense())
+        Logger.debug(typeOfDamage + " defense used: " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicDefense())
                     + " | Damage reduction scale: " + 
                     (damageType == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
         Logger.debug("Calculation steps: Damage Dealt = base + variable = "+ (baseDamage+variableDamage) +" * levelDiff -> " + ((baseDamage + variableDamage)*levelDifference) + 

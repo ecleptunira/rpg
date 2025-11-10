@@ -2,7 +2,6 @@ package project.rpg.main;
 
 import project.rpg.characters.classes.jobs.*;
 import project.rpg.characters.classes.jobs.monstersjobs.GoblinJob;
-import project.rpg.characters.classes.jobs.monstersjobs.MonsterJob;
 import project.rpg.characters.classes.classes.*;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
@@ -23,8 +22,11 @@ public class Game {
         
         Information.battleStart();
         
-        String a = monster.toString();
-        Logger.capturePrint(a);
+        hero.useSkill("FireBall", monster);
+        hero.useSkill("Basic Attack", monster);
+
+        // String a = monster.toString();
+        // Logger.capturePrint(a);
 
         
 
