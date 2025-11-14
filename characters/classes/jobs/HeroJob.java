@@ -29,12 +29,17 @@ public class HeroJob extends Job {
 
         character.setEvasion(10);
         character.setAccuracy(15);
-
-        // character.setBlock(10);
-        // character.setBlockReduction(25);
-        // character.setParry(20);
-        // character.setParryReduction(20);
-        // character.setParryCounterChance(30);
     }
-    
+
+    @Override
+    public void applyLevelStats(Character c) {
+        c.setPhysicalDamage(c.getPhysicalDamage() + 2);
+        c.setMagicalDamage(c.getMagicalDamage() + 1);
+
+        c.setMaxLife(c.getMaxLife() + (15));
+        c.setLife(c.getLife() + (int) (c.getMaxLife() * 0.2));
+
+        c.setPhysicalDefense(c.getPhysicalDefense() + 1);
+        c.setMagicDefense(c.getMagicDefense() + 1);
+    }
 }

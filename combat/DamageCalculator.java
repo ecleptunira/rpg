@@ -1,6 +1,7 @@
 package project.rpg.combat;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.classes.classes.Monster;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
 
@@ -127,7 +128,7 @@ public class DamageCalculator {
         double randomValue = Math.random() * 100;
 
         Logger.info("WILLHIT? -> (Defender evasion: " + defender.getEvasion() + " - Attacker accuracy: " + attacker.getAccuracy() + 
-                    ") = " + (hitChance < 0 ? 0 : hitChance) + " | Hit chance: 5 ~ 95%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
+                    ") = " + (hitChance < 5 ? (int) 5 : (int) hitChance) + " | Hit chance: 5 ~ 95%" + " | Random value: " + String.format("%.0f", randomValue) + "%");
 
         if (hitChance < 5 ) hitChance = 5; // Minimum hit chance of 5%
         if (hitChance > 95) hitChance = 95; // Maximum hit chance of 95%
@@ -191,15 +192,7 @@ public class DamageCalculator {
                 typeOfDamage = "Magical";
                 break;
         }
-        // if (damageType == DamageType.PHYSICAL){
-        //     damageDealt = applyDefense(damageDealt, defensor.getPhysicalDefense(), defensor.getPercentPhysicalDefense());
-        //     damageReduction = damageDealt;
-        //     typeOfDamage = "Physical";
-        // } else if (damageType == DamageType.MAGICAL){
-        //     damageDealt = applyDefense(damageDealt, defensor.getMagicDefense(), defensor.getPercentMagicDefense());
-        //     damageReduction = damageDealt;
-        //     typeOfDamage = "Magical";
-        // }
+        
         // 4 - check if is a critical hit
         boolean isCritical = isCritical(attacker);
         if (isCritical){
@@ -212,8 +205,14 @@ public class DamageCalculator {
         // 5 = apply the damage on the defensor and show his health
         defensor.takeDamage(damageDealt);
         Information.showHealth(defensor);
+        
         if (!defensor.isAlive()) {
             Information.characterDead(defensor.getName());
+            int gainedXp = 0;
+            if (defensor instanceof Monster monster){
+                gainedXp = ExperienceCalculator.calculateExperience(attacker, monster, monster.getBaseExp());
+            }
+            attacker.gainExperience(gainedXp);
         }
 
         Logger.debug("================ DAMAGE CALCULATION ================");

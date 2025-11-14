@@ -11,7 +11,7 @@ public class FireBall extends Skill{
     }
 
     public String getName(){
-        return "FireBall";
+        return "Fire Ball";
     }
 
     @Override

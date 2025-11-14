@@ -7,7 +7,7 @@ import project.rpg.characters.skills.Stomp;
 public class HighGoblinJob extends MonsterJob{
 
     public HighGoblinJob() {
-        super("High Goblin", 5);
+        super("High Goblin");
         skills.add(new Stomp("Stomp", "A heavy stomp that shakes the ground."));
 
     }

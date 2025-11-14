@@ -1,6 +1,7 @@
 package project.rpg.characters;
 
 import project.rpg.characters.classes.jobs.Job;
+import project.rpg.characters.classes.classes.Monster;
 
 /**
  * Represents a controllable player character in the game.
@@ -39,7 +40,7 @@ public class Player extends Character{
      * @param skillName the name of the skill to use
      * @param target the target Character who will receive the skill
      */
-    public void useSkill(String skillName, Character target){
+    public void useSkill(String skillName, Monster target){
         if (job != null){
             job.useSkill(skillName, this, target);
         }

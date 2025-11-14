@@ -3,6 +3,10 @@ import project.rpg.characters.Character;
 
 public class ExperienceCalculator {
 
+    /**
+     * Calculates the experience factor based on level difference between attacker and defender
+     * @return factor to be applied to experience gain with a variation between 0.5 ~ 2.0
+     */
     public static double expFactor(Character attacker, Character defender){
         int levelDifference = defender.getLevel() - attacker.getLevel();
         
@@ -20,10 +24,16 @@ public class ExperienceCalculator {
         return 1.0;
     }
 
-    @SuppressWarnings("unused")
-    public static int calculateExperience(Character attacker, Character defender){
+    /**
+     * Calculates the experience gained by the character after defeating the enemy
+     * @param attacker Who is gaining experience
+     * @param defender Who was defeated
+     * @param baseEXP Base experience value of the defeated enemy
+     * @return Total experience gained
+     */
+    public static int calculateExperience(Character attacker, Character defender, int baseEXP){
         double factor = expFactor(attacker, defender);
-        
-        return 1;
+        int xpGain = (int) (defender.getLevel() * baseEXP * factor);
+        return Math.round(xpGain);
     }
 }

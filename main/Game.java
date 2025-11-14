@@ -14,20 +14,26 @@ public class Game {
         Information.limparTela();
         Job assasinClass = new AssasinJob();
         Job heroClass = new HeroJob();
-        Job monsterClass = new GoblinJob();
+        Job goblinClass = new GoblinJob();
 
         Assasin assasin = new Assasin("Ezio", assasinClass);
         Hero hero = new Hero ("Arthur", heroClass);
-        Monster monster = new Monster("Goblin", monsterClass);
+        Monster goblin = new Monster("Goblin", goblinClass, 5);
         
         Information.battleStart();
+        goblin.setLevel(15);
+        goblin.setLife(10);
+        hero.setLife(150);
+        System.out.println(hero.getLife());
+        hero.useSkill("Basic Attack", goblin);
+        System.out.println(hero.getLife());
         
-        hero.useSkill("FireBall", monster);
-        hero.useSkill("Basic Attack", monster);
+
+        // hero.useSkill("Fire Ball", monster);
+        // hero.useSkill("Basic Attack", monster);
 
         // String a = monster.toString();
         // Logger.capturePrint(a);
-
         
 
         // hero.useSkill("Basic Attack", monster);

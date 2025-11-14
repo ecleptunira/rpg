@@ -6,7 +6,6 @@ import project.rpg.combat.DamageType;
 
 public class BasicAttack extends Skill{
 
-    
     public BasicAttack(String name, String description) {
         super(name, description);
     }
