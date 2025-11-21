@@ -187,7 +187,7 @@ public class DamageCalculator {
                 typeOfDamage = "Physical";
                 break;
             case MAGICAL:
-                damageDealt = applyDefense(damageDealt, defensor.getMagicDefense(), defensor.getPercentMagicDefense());
+                damageDealt = applyDefense(damageDealt, defensor.getMagicalDefense(), defensor.getPercentMagicDefense());
                 damageReduction = damageDealt;
                 typeOfDamage = "Magical";
                 break;
@@ -223,7 +223,7 @@ public class DamageCalculator {
                     (attacker.getCriticalChanceAcumulated() > attacker.getCriticalChance() ? attacker.getCriticalChanceAcumulated() : attacker.getCriticalChance()) + "%");
         Logger.debug("Damage pre-mitigation: " + (baseDamage + variableDamage));
         Logger.debug("Level Difference Multiplier: " + String.format("%.1f", levelDifference) + " | Critical Hit: " + (isCritical ? "Yes" : "No"));
-        Logger.debug(typeOfDamage + " defense used: " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicDefense())
+        Logger.debug(typeOfDamage + " defense used: " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
                     + " | Damage reduction scale: " + 
                     (damageType == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
         Logger.debug("Calculation steps: Damage Dealt = base + variable = "+ (baseDamage+variableDamage) +" * levelDiff -> " + ((baseDamage + variableDamage)*levelDifference) + 

@@ -21,12 +21,17 @@ public class Game {
         Monster goblin = new Monster("Goblin", goblinClass, 5);
         
         Information.battleStart();
-        goblin.setLevel(15);
-        goblin.setLife(10);
-        hero.setLife(150);
-        System.out.println(hero.getLife());
-        hero.useSkill("Basic Attack", goblin);
-        System.out.println(hero.getLife());
+        goblin.setLevel(50);
+        goblin.setLife(1);
+        assasin.setLife(1);
+
+        String status = assasin.toString();
+        System.out.println(status);
+
+        assasin.useSkill("Basic Attack", goblin);
+
+        status = assasin.toString();
+        System.out.println(status);
         
 
         // hero.useSkill("Fire Ball", monster);

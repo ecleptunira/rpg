@@ -14,32 +14,35 @@ public class HeroJob extends Job {
 
     @Override
     public void applyClassStats(Character character) {
-        character.setPhysicalDamage(40);
-        character.setMagicalDamage(20);
+        character.setPhysicalDamage(20);
+        character.setMagicalDamage(5);
 
-        character.setMaxLife(200);
-        character.setLife(200);
+        character.setMaxLife(150);
+        character.setLife(150);
 
         character.setPhysicalDefense(15);
-        character.setMagicDefense(10);
+        character.setMagicalDefense(10);
 
         character.setCriticalChance(10);
         character.setCriticalChanceAcumulated(10);
         character.setCriticalDamage(50);
 
-        character.setEvasion(10);
-        character.setAccuracy(15);
+        character.setEvasion(5);
+        character.setAccuracy(10);
     }
 
     @Override
     public void applyLevelStats(Character c) {
-        c.setPhysicalDamage(c.getPhysicalDamage() + 2);
+        c.setPhysicalDamage(c.getPhysicalDamage() + 4);
         c.setMagicalDamage(c.getMagicalDamage() + 1);
 
-        c.setMaxLife(c.getMaxLife() + (15));
+        c.setMaxLife(c.getMaxLife() + (25));
         c.setLife(c.getLife() + (int) (c.getMaxLife() * 0.2));
+        if (c.getLife() > c.getMaxLife()){
+            c.setLife(c.getMaxLife());
+        }
 
-        c.setPhysicalDefense(c.getPhysicalDefense() + 1);
-        c.setMagicDefense(c.getMagicDefense() + 1);
+        c.setPhysicalDefense(c.getPhysicalDefense() + 3);
+        c.setMagicalDefense(c.getMagicalDefense() + 2);
     }
 }

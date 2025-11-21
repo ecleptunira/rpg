@@ -16,6 +16,10 @@ public class Monster extends Player{
         return (MonsterJob) getJob();
     }
 
+    public void upWithoutLevel(){
+        
+    }
+
     public int getBaseExp(){
         return baseExp;
     }

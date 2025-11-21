@@ -30,10 +30,12 @@ public class Player extends Character{
         job.applyClassStats(this);
     }
 
-    public Job getJob(){
-        return job;
+    @Override
+    public void levelUp(){
+        super.levelUp();
+        job.applyLevelStats(this);
     }
-
+    
     /**
      * Executes a skill from the player's current job.
      * 
@@ -45,10 +47,13 @@ public class Player extends Character{
             job.useSkill(skillName, this, target);
         }
     }
-
+    
     public String toString() {
         return super.toString() + "\nClasse: " + job.getName() + 
-               "\nSkills: " + job.getSkills();
+        "\nSkills: " + job.getSkills();
     }
-
+    
+    public Job getJob(){
+        return job;
+    }
 }

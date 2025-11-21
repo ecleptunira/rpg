@@ -100,7 +100,7 @@ public abstract class Character {
      * level up the character.
      */
     public void levelUp(){
-        this.level += 1;
+        this.level ++;
         this.experience -= this.experienceToNextLevel;
         this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
         Information.levelUp(this);
@@ -207,10 +207,10 @@ public abstract class Character {
     public int getPercentMagicDefense(){
         return (int) Math.abs((100 / (1 + (this.magicDefense / 25.0)))-100);
     }
-    public int getMagicDefense(){
+    public int getMagicalDefense(){
         return magicDefense;
     }
-    public void setMagicDefense(int magicDefense) {
+    public void setMagicalDefense(int magicDefense) {
         this.magicDefense = magicDefense;
     }
 
