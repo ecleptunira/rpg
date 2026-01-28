@@ -53,13 +53,13 @@ public class DamageCalculator {
 
     /**
      * Returns damage multiplier based on attacker/defender level difference.
+     * higher (levelDiff < -5) => -5% per level beyond 5 (capped at 0.5)
      *
+     * This makes strong attacke
      * Rules:
      * - If |levelDiff| <= 5  => multiplier = 1.0 (no change)
      * - If attacker is higher (levelDiff > 5) => +10% per level beyond 5 (capped at 2.0)
-     * - If defender is higher (levelDiff < -5) => -5% per level beyond 5 (capped at 0.5)
-     *
-     * This makes strong attackers scale faster (up to 2x) while being less punishing
+     * - If defender isrs scale faster (up to 2x) while being less punishing
      * when defender is higher (down to 0.5x), matching your examples.
      */
     public static double levelDifference(Character attacker, Character defender){

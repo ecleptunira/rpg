@@ -21,21 +21,26 @@ public class Game {
         Monster goblin = new Monster("Goblin", goblinClass, 5);
         
         Information.battleStart();
-        goblin.setLevel(50);
-        goblin.setLife(1);
-        assasin.setLife(1);
+        // goblin.setLevel(1);
 
+        assasin.setLife(1);
         String status = assasin.toString();
         System.out.println(status);
-
-        assasin.useSkill("Basic Attack", goblin);
-
+        
+        // assasin.gainExperience(100);
+        // assasin.gainExperience(257997);
+        // assasin.gainExperience(700);
+        assasin.forceLevelTo(5);
         status = assasin.toString();
         System.out.println(status);
         
+        // assasin.gainExperience(1);
+        // status = assasin.toString();
+        // System.out.println(status);
+        // hero.setCriticalChanceAcumulated(100);
 
-        // hero.useSkill("Fire Ball", monster);
-        // hero.useSkill("Basic Attack", monster);
+        // hero.useSkill("Fire Ball", goblin);
+        // hero.useSkill("Basic Attack", goblin);
 
         // String a = monster.toString();
         // Logger.capturePrint(a);

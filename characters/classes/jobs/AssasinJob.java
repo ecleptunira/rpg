@@ -14,14 +14,14 @@ public class AssasinJob extends Job {
 
     @Override
     public void applyClassStats(Character character) {
+        character.setLife(90);
+        character.setMaxLife(90);
+
         character.setPhysicalDamage(28);
         character.setMagicalDamage(10);
 
         character.setPhysicalDefense(6);
         character.setMagicalDefense(6);
-
-        character.setLife(90);
-        character.setMaxLife(90);
 
         character.setCriticalChance(25);
         character.setCriticalChanceAcumulated(25);
@@ -33,24 +33,39 @@ public class AssasinJob extends Job {
 
     @Override
     public void applyLevelStats(Character c) {
-        c.setPhysicalDamage(c.getPhysicalDamage() + 6);
+        if (c.getLevel() > 30){
+            c.heal((int) (c.getMaxLife() * 0.2));
+            return;
+        }
 
-        c.setMaxLife(c.getMaxLife() + (12));
+        //Life
+        c.setMaxLife(c.getMaxLife() + (15));
         c.setLife(c.getLife() + (int) (c.getMaxLife() * 0.2));
         if (c.getLife() > c.getMaxLife()){
             c.setLife(c.getMaxLife());
         }
 
-        if (c.getEvasion() <= 95){
-            c.setEvasion(c.getEvasion() + 2);
+        //Damage
+        c.setPhysicalDamage(c.getPhysicalDamage() + 2);
+
+        //Defense
+        c.setPhysicalDefense(c.getPhysicalDefense() + 1);
+        if ((c.getLevel()) % 3 == 0){
+            c.setMagicalDefense(c.getMagicalDefense() + 1);
         }
 
-        if (c.getCriticalChance() <= 50){
+        //Critical
+        if (c.getCriticalChance() < 50){
             c.setCriticalChance(c.getCriticalChance() + 1);
             c.setCriticalChanceAcumulated(c.getCriticalChance());
-        } else {
-            c.setPhysicalDamage(c.getPhysicalDamage() + 1);
+        } else if (c.getLevel() == 30) {
+            c.setPhysicalDamage(c.getPhysicalDamage() + 5);
         }
-    }
+        
+        //Evasion
+        c.setEvasion(c.getEvasion() + 2);
 
+        //Accuracy
+        c.setAccuracy(c.getAccuracy() + 2);
+    }
 }

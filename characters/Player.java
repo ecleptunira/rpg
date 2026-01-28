@@ -35,6 +35,16 @@ public class Player extends Character{
         super.levelUp();
         job.applyLevelStats(this);
     }
+
+    @Override
+    public void forceLevelTo(int targetLevel){
+        int a = targetLevel;
+        super.forceLevelTo(targetLevel);
+        while (this.getLevel() >= a){
+            job.applyLevelStats(this);
+            a++;
+        }
+    }
     
     /**
      * Executes a skill from the player's current job.

@@ -14,18 +14,17 @@ public abstract class Character {
 
     private String name;                        // name of the character
     private int level = 1;                      // level of the character
-    private int experience = 0;              // experience points
-    private int experienceToNextLevel = 100; // experience needed for next level
+    private int experience = 0;                 // experience points
+    private int experienceToNextLevel = 100;    // experience needed for next level
     
-
-    private int physicalDamage = 1;      // base physical damage
-    private int magicalDamage = 1;         // base magic damage
-
-    private int physicalDefense = 0;     //base physical defense
-    private int magicDefense = 0;        // base magic defense
-
     private int life = 100;              // current life
     private int maxLife = life;          // maximum life
+
+    private int physicalDamage = 1;      // base physical damage
+    private int magicalDamage = 1;       // base magic damage
+
+    private int physicalDefense = 0;     // base physical defense
+    private int magicDefense = 0;        // base magic defense
 
     private int posX = 0;                // position on X axis
     private int posY = 0;                // position on Y axis
@@ -101,8 +100,21 @@ public abstract class Character {
      */
     public void levelUp(){
         this.level ++;
-        this.experience -= this.experienceToNextLevel;
+        this.experience -= this.experienceToNextLevel ;
         this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
+        Information.levelUp(this);
+        Information.showExperience(this);
+    }
+
+    public void forceLevelTo(int targetLevel){
+        if (targetLevel < this.level){
+            return;
+        }
+
+        while (this.level < targetLevel){
+            this.level ++;
+            this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
+        }
         Information.levelUp(this);
         Information.showExperience(this);
     }

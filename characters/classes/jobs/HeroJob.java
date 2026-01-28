@@ -33,6 +33,10 @@ public class HeroJob extends Job {
 
     @Override
     public void applyLevelStats(Character c) {
+        if (c.getLevel() > 30){
+            c.setLife(c.getLife() + (int) (c.getMaxLife() * 0.2));
+            return;
+        }
         c.setPhysicalDamage(c.getPhysicalDamage() + 4);
         c.setMagicalDamage(c.getMagicalDamage() + 1);
 
