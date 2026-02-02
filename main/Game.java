@@ -1,7 +1,7 @@
 package project.rpg.main;
 
 import project.rpg.characters.classes.jobs.*;
-import project.rpg.characters.classes.jobs.monstersjobs.GoblinJob;
+import project.rpg.characters.classes.jobs.monstersjobs.*;
 import project.rpg.characters.classes.classes.*;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
@@ -15,7 +15,11 @@ public class Game {
         Job assasinClass = new AssasinJob();
         Job heroClass = new HeroJob();
         Job goblinClass = new GoblinJob();
+        Job rangerClass = new RangerJob();
+        Job mageClass = new MageJob();
 
+        Mage mage = new Mage("Gandalf", mageClass);
+        Ranger ranger = new Ranger("Legolas", rangerClass);
         Assasin assasin = new Assasin("Ezio", assasinClass);
         Hero hero = new Hero ("Arthur", heroClass);
         Monster goblin = new Monster("Goblin", goblinClass, 5);
@@ -23,28 +27,18 @@ public class Game {
         Information.battleStart();
         // goblin.setLevel(1);
 
-        assasin.setLife(1);
-        String status = assasin.toString();
+        mage.setLife(1);
+        String status = mage.toString();
         System.out.println(status);
         
-        // assasin.gainExperience(100);
-        // assasin.gainExperience(257997);
+        mage.gainExperience(322599);
         // assasin.gainExperience(700);
-        assasin.forceLevelTo(5);
-        status = assasin.toString();
+        // assasin.forceLevelTo(5);
+        status = mage.toString();
         System.out.println(status);
-        
-        // assasin.gainExperience(1);
-        // status = assasin.toString();
-        // System.out.println(status);
-        // hero.setCriticalChanceAcumulated(100);
 
         // hero.useSkill("Fire Ball", goblin);
         // hero.useSkill("Basic Attack", goblin);
-
-        // String a = monster.toString();
-        // Logger.capturePrint(a);
-        
 
         // hero.useSkill("Basic Attack", monster);
         // ExperienceCalculator.expFactor(hero, monster);

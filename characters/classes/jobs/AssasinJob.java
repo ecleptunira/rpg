@@ -35,15 +35,13 @@ public class AssasinJob extends Job {
     public void applyLevelStats(Character c) {
         if (c.getLevel() > 30){
             c.heal((int) (c.getMaxLife() * 0.2));
-            return;
         }
 
         //Life
         c.setMaxLife(c.getMaxLife() + (15));
-        c.setLife(c.getLife() + (int) (c.getMaxLife() * 0.2));
-        if (c.getLife() > c.getMaxLife()){
-            c.setLife(c.getMaxLife());
-        }
+
+        //heal
+        c.heal((int) (c.getMaxLife() * 0.2));
 
         //Damage
         c.setPhysicalDamage(c.getPhysicalDamage() + 2);

@@ -13,7 +13,7 @@ public abstract class Character {
     private List<Skill> skills = new ArrayList<>();
 
     private String name;                        // name of the character
-    private int level = 1;                      // level of the character
+    private int level = 0;                      // level of the character
     private int experience = 0;                 // experience points
     private int experienceToNextLevel = 100;    // experience needed for next level
     
