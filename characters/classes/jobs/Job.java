@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import project.rpg.characters.Character;
 import project.rpg.characters.skills.Skill;
-import project.rpg.characters.classes.classes.Monster;
 
 public abstract class Job {
     protected String name;
@@ -23,7 +22,7 @@ public abstract class Job {
 
     public abstract void applyLevelStats(Character character);
 
-    public void useSkill(String skillName, Character user, Monster target) {
+    public void useSkill(String skillName, Character user, Character target) {
         for (Skill skill : skills) {
             if (skill.getName().equalsIgnoreCase(skillName)) {
                 skill.execute(user, target);

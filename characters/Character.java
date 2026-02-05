@@ -68,11 +68,10 @@ public abstract class Character {
      * ensuring life does not exceed maxLife.
      * @param amount amount to heal
      */
-    public void heal(int amount){
-        this.life += amount;
-        if (this.life > this.maxLife) {
-            this.life = this.maxLife;
-        }
+    public int heal(int amount){
+        int before = this.life;
+        this.life = Math.min(this.life + amount, this.maxLife);
+        return (this.life - before);
     }
 
     /**
@@ -115,8 +114,8 @@ public abstract class Character {
             this.level ++;
             this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
         }
-        Information.levelUp(this);
-        Information.showExperience(this);
+        // Information.levelUp(this);
+        // Information.showExperience(this);
     }
 
     /**

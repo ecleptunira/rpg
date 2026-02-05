@@ -1,7 +1,6 @@
 package project.rpg.characters;
 
 import project.rpg.characters.classes.jobs.Job;
-import project.rpg.characters.classes.classes.Monster;
 
 /**
  * Represents a controllable player character in the game.
@@ -38,7 +37,7 @@ public class Player extends Character{
 
     @Override
     public void forceLevelTo(int targetLevel){
-        int a = targetLevel;
+        int a = this.getLevel();
         super.forceLevelTo(targetLevel);
         while (this.getLevel() >= a){
             job.applyLevelStats(this);
@@ -52,7 +51,7 @@ public class Player extends Character{
      * @param skillName the name of the skill to use
      * @param target the target Character who will receive the skill
      */
-    public void useSkill(String skillName, Monster target){
+    public void useSkill(String skillName, Character target){
         if (job != null){
             job.useSkill(skillName, this, target);
         }

@@ -1,11 +1,15 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.*;
 
 public class RangerJob extends Job{
 
     public RangerJob() {
         this.name = "Ranger";
+        skills.add(new BasicArrow("Basic Arrow", "A simples arrow shot"));
+        skills.add(new MultiShot("Multi Shot", "Shoots multiple arros at once"));
+        skills.add(new PreciseShot("Precise Shot", "A highly accurate and powerful shot"));
     }
 
     @Override

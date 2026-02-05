@@ -1,8 +1,7 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
-import project.rpg.characters.skills.BasicAttack;
-import project.rpg.characters.skills.BackStab;
+import project.rpg.characters.skills.*;
 
 public class AssasinJob extends Job {
 

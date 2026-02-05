@@ -194,4 +194,16 @@ public class Information {
         Logger.capturePrint(YELLOW + character.getName() + RESET + " gained " + CYAN + amount + RESET + " experience points.");
         Logger.debug("New experience total: " + character.getExperience() + "/" + character.getExperienceToNextLevel());
     }
+
+    public static void heal(Character healer, int amount){
+        Logger.capturePrint(lineBreak2);
+        Logger.capturePrint(CYAN + healer.getName() + RESET + 
+                            " casts a healing spell!");
+
+        Logger.capturePrint(GREEN + "+" + amount + RESET + 
+                            " HP restored.");
+                            
+        showHealth(healer);
+        Logger.capturePrint(lineBreak2);
+    }
 }

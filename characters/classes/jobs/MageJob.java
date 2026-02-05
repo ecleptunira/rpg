@@ -1,13 +1,15 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
-import project.rpg.characters.skills.BasicAttack;
+import project.rpg.characters.skills.*;
 
 public class MageJob extends Job{
 
     public MageJob() {
         this.name = "Mage";
-        skills.add(new BasicAttack("Basic Attack", "Simple physical attack"));
+        skills.add(new MagicBolt("Basic magic", "Simple Magical attack"));
+        skills.add(new Heal("Heal", "Restore a portion of life"));
+        skills.add(new ArcaneBurst("Arcane Burst", "Unleash a burst of arcane energy"));
     }
 
     @Override

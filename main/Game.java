@@ -25,29 +25,24 @@ public class Game {
         Monster goblin = new Monster("Goblin", goblinClass, 5);
         
         Information.battleStart();
-        // goblin.setLevel(1);
 
-        mage.setLife(1);
-        String status = mage.toString();
+        String status = ranger.toString();
+        System.out.println(status);
+        // mage.gainExperience(322599);
+        
+        // assasin.useSkill("Basic Attack", goblin);
+        ranger.setLife(1);
+        ranger.useSkill("Multi Shot", goblin);
+        
+        // goblin.setMaxLife(5000);
+        // goblin.setLife(5000);
+        // goblin.setLevel(30);
+        // ranger.forceLevelTo(30);
+        // ranger.setLife(1);
+
+        status = ranger.toString();
         System.out.println(status);
         
-        mage.gainExperience(322599);
-        // assasin.gainExperience(700);
-        // assasin.forceLevelTo(5);
-        status = mage.toString();
-        System.out.println(status);
-
         // hero.useSkill("Fire Ball", goblin);
-        // hero.useSkill("Basic Attack", goblin);
-
-        // hero.useSkill("Basic Attack", monster);
-        // ExperienceCalculator.expFactor(hero, monster);
-
-        // monster.useSkill("Basic Attack", assasin);
-        // assasin.useSkill("Backstab", monster);
-        // hero.useSkill("Divine Sword", monster);
-        // monster.useSkill("Stomp", hero);
-
-
     }
 }
