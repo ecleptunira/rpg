@@ -1,6 +1,6 @@
 package project.rpg.characters;
 
-import project.rpg.utils.Direction;
+// import project.rpg.utils.Direction;
 import project.rpg.utils.Information;
 import project.rpg.characters.classes.jobs.Job;
 import project.rpg.characters.skills.Skill;
@@ -26,8 +26,8 @@ public abstract class Character {
     private int physicalDefense = 0;     // base physical defense
     private int magicDefense = 0;        // base magic defense
 
-    private int posX = 0;                // position on X axis
-    private int posY = 0;                // position on Y axis
+    // private int posX = 0;                // position on X axis
+    // private int posY = 0;                // position on Y axis
 
     private int criticalChance = 0;                        // percentage chance to land a critical hit
     private int criticalChanceAcumulated = 0;              // acumulated critical chance for next attack
@@ -45,11 +45,11 @@ public abstract class Character {
         this.name = name;
     }
 
-    public boolean canAttack(Character enemy) {
-        int deltaX = Math.abs(this.posX - enemy.posX);
-        int deltaY = Math.abs(this.posY - enemy.posY);
-        return (deltaX < 2 && deltaY == 0) || (deltaX == 0 && deltaY < 2);
-    }
+    // public boolean canAttack(Character enemy) {
+    //     int deltaX = Math.abs(this.posX - enemy.posX);
+    //     int deltaY = Math.abs(this.posY - enemy.posY);
+    //     return (deltaX < 2 && deltaY == 0) || (deltaX == 0 && deltaY < 2);
+    // }
 
     /**
      * Reduce the character's life when taking damage,
@@ -138,21 +138,21 @@ public abstract class Character {
         "\n | Critical Damage: " + criticalDamage + "%" +
         "\n | Evasion: " + evasion + "%" +
         "\n | Accuracy: " + accuracy + "%" +
-        "\n | Position: (" + posX + ", " + posY + ")" +
+        // "\n | Position: (" + posX + ", " + posY + ")" +
         "\n | Skills: " + skills.stream().map(Skill::getName).collect(Collectors.joining(", "));
     }
 
-    public void move (Direction direction) {
-        if (direction == Direction.UP) {
-            this.posY += 1;
-        } else if (direction == Direction.DOWN) {
-            this.posY -= 1;
-        } else if (direction == Direction.LEFT) {
-            this.posX -= 1;
-        } else if (direction == Direction.RIGHT) {
-            this.posX += 1;
-        }
-    }
+    // public void move (Direction direction) {
+    //     if (direction == Direction.UP) {
+    //         this.posY += 1;
+    //     } else if (direction == Direction.DOWN) {
+    //         this.posY -= 1;
+    //     } else if (direction == Direction.LEFT) {
+    //         this.posX -= 1;
+    //     } else if (direction == Direction.RIGHT) {
+    //         this.posX += 1;
+    //     }
+    // }
 
     //Setters and Getters
 
@@ -239,19 +239,19 @@ public abstract class Character {
         this.maxLife = maxLife;
     }
 
-    public int getPosX() {
-        return posX;
-    }
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
+    // public int getPosX() {
+    //     return posX;
+    // }
+    // public void setPosX(int posX) {
+    //     this.posX = posX;
+    // }
 
-    public int getPosY() {
-        return posY;
-    }
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
+    // public int getPosY() {
+    //     return posY;
+    // }
+    // public void setPosY(int posY) {
+    //     this.posY = posY;
+    // }
 
     public int getCriticalChance() {
         return criticalChance;

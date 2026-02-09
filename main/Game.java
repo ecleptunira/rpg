@@ -5,6 +5,7 @@ import project.rpg.characters.classes.jobs.monstersjobs.*;
 import project.rpg.characters.classes.classes.*;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
+import project.rpg.combat.DamageCalculator;
 import project.rpg.combat.ExperienceCalculator;
 
 
@@ -25,14 +26,15 @@ public class Game {
         Monster goblin = new Monster("Goblin", goblinClass, 5);
         
         Information.battleStart();
-
         String status = ranger.toString();
-        System.out.println(status);
+
+        // System.out.println(status);
         // mage.gainExperience(322599);
         
         // assasin.useSkill("Basic Attack", goblin);
-        ranger.setLife(1);
-        ranger.useSkill("Multi Shot", goblin);
+        // ranger.setLife(1);
+        // ranger.useSkill("Basic Arrow", goblin);
+        ranger.useSkill("Basic Arrow", goblin);
         
         // goblin.setMaxLife(5000);
         // goblin.setLife(5000);
@@ -40,8 +42,8 @@ public class Game {
         // ranger.forceLevelTo(30);
         // ranger.setLife(1);
 
-        status = ranger.toString();
-        System.out.println(status);
+        // status = ranger.toString();
+        // System.out.println(status);
         
         // hero.useSkill("Fire Ball", goblin);
     }
