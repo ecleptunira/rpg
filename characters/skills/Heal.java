@@ -5,12 +5,19 @@ import project.rpg.utils.Information;
 
 public class Heal extends Skill{
 
-    public Heal(String name, String description) {
-        super(name, description);
+    private static final String NAME = "Heal";
+    private static final String DESCRIPTION = "Restore a portion of life";
+
+    public Heal() {
+        super(NAME, DESCRIPTION);
     }
     
     public String getName() {
-        return "Heal";
+        return NAME;
+    }
+
+    public String getDescription(){
+        return DESCRIPTION;
     }
 
     @Override

@@ -8,7 +8,7 @@ public class GoblinJob extends MonsterJob{
 
     public GoblinJob() {
         super("Goblin");
-        skills.add(new Stomp("Stomp", "A stomp that breaks the ground."));
+        skills.add(new Stomp());
 
     }
 

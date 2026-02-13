@@ -7,9 +7,9 @@ public class HeroJob extends Job {
 
     public HeroJob() {
         this.name = "Hero";
-        skills.add(new BasicAttack("Basick Attack", "Simple physical attack"));
-        skills.add(new DivineSword("Divine Sword", "A powerful divine slash."));
-        skills.add(new FireBall("FireBall", "A ball of fire that burns the enemy."));
+        skills.add(new BasicAttack());
+        skills.add(new DivineSword());
+        skills.add(new FireBall());
     }
 
     @Override

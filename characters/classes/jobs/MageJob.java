@@ -7,9 +7,9 @@ public class MageJob extends Job{
 
     public MageJob() {
         this.name = "Mage";
-        skills.add(new MagicBolt("Basic magic", "Simple Magical attack"));
-        skills.add(new Heal("Heal", "Restore a portion of life"));
-        skills.add(new ArcaneBurst("Arcane Burst", "Unleash a burst of arcane energy"));
+        skills.add(new MagicBolt());
+        skills.add(new Heal());
+        skills.add(new ArcaneBurst());
     }
 
     @Override

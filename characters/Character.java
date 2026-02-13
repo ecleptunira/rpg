@@ -58,9 +58,7 @@ public abstract class Character {
      */
     public void takeDamage(int damage) {
         this.life -= damage;
-        if (this.life < 0) {
-            this.life = 0;
-        }
+        if (this.life < 0) this.life = 0;
     }
 
     /**

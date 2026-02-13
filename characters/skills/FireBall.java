@@ -1,27 +1,39 @@
 package project.rpg.characters.skills;
 
 import project.rpg.characters.Character;
-import project.rpg.combat.DamageCalculator;
-import project.rpg.combat.DamageType;
+import project.rpg.combat.*;
+import project.rpg.utils.Information;
 
 public class FireBall extends Skill{
 
-    public FireBall(String name, String description) {
-        super(name, description);
+    private static final String NAME = "FireBall";
+    private static final String DESCRIPTION = "A ball of fire that burns the enemy.";
+
+    public FireBall() {
+        super(NAME, DESCRIPTION);
+    }
+    
+    public String getName() {
+        return NAME;
     }
 
-    public String getName(){
-        return "Fire Ball";
+    public String getDescription(){
+        return DESCRIPTION;
     }
 
     @Override
     public void execute(Character attacker, Character defensor){
-        DamageCalculator.calculateAndApplyDamage(
-            attacker, 
-            defensor, 
-            1.5, 
-            0.5, 
-            getName(), 
-            DamageType.MAGICAL);
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.5, 0.5, DamageType.MAGICAL);
+
+        if (result.isCritical()){
+            Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);
+        } else if (result.willHit()){
+            Information.damageStatus(attacker, getName(), result.damageDealt(), defensor);
+        } 
+        if(result.willHit()){
+            defensor.takeDamage(result.damageDealt());
+            Information.showHealth(defensor);
+            Information.combatLogSingleHit(attacker, defensor, result);
+        }
     }
 }

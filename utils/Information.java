@@ -1,6 +1,9 @@
 package project.rpg.utils;
 
 import project.rpg.characters.Character;
+import project.rpg.combat.DamageResult;
+import project.rpg.combat.DamageType;
+
 import java.util.Scanner;
 
 /**
@@ -197,13 +200,38 @@ public class Information {
 
     public static void heal(Character healer, int amount){
         Logger.capturePrint(lineBreak2);
-        Logger.capturePrint(CYAN + healer.getName() + RESET + 
-                            " casts a healing spell!");
-
-        Logger.capturePrint(GREEN + "+" + amount + RESET + 
-                            " HP restored.");
-                            
+        Logger.capturePrint(CYAN + healer.getName() + RESET + " casts a healing spell!");
+        Logger.capturePrint(GREEN + "+" + amount + RESET + " HP restored.");
         showHealth(healer);
         Logger.capturePrint(lineBreak2);
+    }
+
+    public static void combatLogSingleHit (Character attacker, Character defensor, DamageResult result) {
+        Logger.debug("================ DAMAGE CALCULATION STEPS ================");
+        Logger.debug("Attacker: " + attacker.getName() + " (Level " + attacker.getLevel() + ") - " + 
+                    "Defender: " + defensor.getName() + " (Level " + defensor.getLevel() + ")");
+        Logger.debug("Damage Type: " + result.damageType() + " | Base Damage " + result.baseDamage() + " + Variable Damage (Random): " + result.variableDamage());
+        Logger.debug("Critical damage: " + attacker.getCriticalDamage() + " | Critical Chance: " + result.criticalPercentage() + "% | Damage pre-mitigation: " + (result.baseDamage() + result.variableDamage()));
+        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", result.levelDifference()) + " | Critical Hit: " + (result.isCritical() ? "Yes" : "No"));
+        Logger.debug((result.damageType() == DamageType.PHYSICAL ? "Physical" : "Magical") + " defense used: " +  (result.damageType() == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
+                    + " | Damage reduction scale: " + 
+                    (result.damageType() == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
+        Logger.debug("Calculation steps: Damage Dealt = base + variable = "+ (result.baseDamage() + result.variableDamage()) +" * levelDiff -> " + ((result.baseDamage() + result.variableDamage())*result.levelDifference()) + 
+                    " -> apply defense -> " + result.damageReduction() + " -> " + (result.isCritical() ? "Apply critical -> x" + (1 + (attacker.getCriticalDamage() / 100.0)) + " = " : "no critical"));
+        Logger.debug("Final Damage: " + result.damageDealt());
+    }
+
+    public static void combatLogMultHit(Character attacker, Character defensor, DamageResult result, int damageDealt, int damageDealtPreMitigation) {
+        Logger.debug("================ DAMAGE CALCULATION STEPS ================");
+        Logger.debug("Attacker: " + attacker.getName() + " (Level " + attacker.getLevel() + ") - " + 
+                    "Defender: " + defensor.getName() + " (Level " + defensor.getLevel() + ")");
+        Logger.debug("Damage Type: " + result.damageType() + " | Base Damage " + result.baseDamage() + " + Bonus Damage (Random): 0 ~ " + result.bonusDamage());
+        Logger.debug("Critical damage: " + attacker.getCriticalDamage() + " | Critical Chance: " + result.criticalPercentage() + "%");
+        Logger.debug("Total damage pre-mitigation: " + damageDealtPreMitigation + " | total damage dealt: " + damageDealt);
+        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", result.levelDifference()) + "x");
+        Logger.debug((result.damageType() == DamageType.PHYSICAL ? "Physical" : "Magical") + " defense used: " +  
+                    (result.damageType() == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
+                    + " | Damage reduction scale: " + (result.damageType() == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
+        Logger.debug("Final Damage: " + damageDealt);
     }
 }

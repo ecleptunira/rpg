@@ -1,23 +1,25 @@
 package project.rpg.combat;
 
 import project.rpg.characters.Character;
-import project.rpg.characters.classes.classes.Monster;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
 
 public class DamageCalculator {
 
-    public static void calculateAndApplyDamage( Character attacker, 
-                                        Character defensor,
-                                        Double baseDamageFactor,
-                                        Double variableDamageFactor,
-                                        String habilityName,
-                                        DamageType damageType){
+    public static DamageResult calculateDamage( Character attacker, 
+                                                Character defensor, 
+                                                Double baseDamageFactor, 
+                                                Double variableDamageFactor, 
+                                                DamageType damageType){
         //Check list
-        Logger.log("--- BEGGIN CALCULATE AND APLLY DAMAGE ---");
-
+        Logger.info("================ DAMAGE CALCULATOR ================");
+        Logger.info("DAMAGE CALCULATOR -> " + attacker.getName() + " is attacking " + defensor.getName() + " with " + damageType + " damage.");
         //1 - Check if the attack will hit
-        if (willHit(attacker, defensor)) {return;}
+        boolean willHit = willHit(attacker, defensor);
+        if (!willHit) {
+            Information.damageMissed(attacker, defensor);
+            return DamageResult.missResult(attacker, damageType);
+        }
 
         //2 - calculate the damage
         int attackDamage = damageType == DamageType.PHYSICAL ? attacker.getPhysicalDamage() : attacker.getMagicalDamage();
@@ -27,61 +29,29 @@ public class DamageCalculator {
 
         double levelDifference = levelDifference(attacker, defensor);
         int damageDealt  = (int) ((baseDamage + variableDamage) * levelDifference);
-        
+
         // 3 - aplly the defense based on the damage type
-        String typeOfDamage = "Unknown";
         int damageReduction = 0;
 
         switch (damageType){
             case PHYSICAL:
                 damageDealt = applyDefense(damageDealt, defensor.getPhysicalDefense(), defensor.getPercentPhysicalDefense());
                 damageReduction = damageDealt;
-                typeOfDamage = "Physical";
                 break;
             case MAGICAL:
                 damageDealt = applyDefense(damageDealt, defensor.getMagicalDefense(), defensor.getPercentMagicDefense());
                 damageReduction = damageDealt;
-                typeOfDamage = "Magical";
                 break;
         }
 
         // 4 - check if is a critical hit
         int criticalPercentage = attacker.getCriticalChanceAcumulated();
         boolean isCritical = isCritical(attacker);
-        if (isCritical){
+
+        if (isCritical) {
             damageDealt = applyCritical(attacker, damageDealt);
-            Information.criticalHit(attacker, habilityName, damageDealt, defensor);
-        }else {
-            Information.damageStatus(attacker, habilityName, damageDealt, defensor);
         }
-
-        // 5 = apply the damage on the defensor and show his health
-        defensor.takeDamage(damageDealt);
-        Information.showHealth(defensor);
-        
-        if (!defensor.isAlive()) {
-            Information.characterDead(defensor.getName());
-            int gainedXp = 0;
-            if (defensor instanceof Monster monster){
-                gainedXp = ExperienceCalculator.calculateExperience(attacker, monster, monster.getBaseExp());
-            }
-            attacker.gainExperience(gainedXp);
-        }
-
-        Logger.debug("================ DAMAGE CALCULATION ================");
-        Logger.debug("Attacker: " + attacker.getName() + " (Level " + attacker.getLevel() + ") - " + 
-                    "Defender: " + defensor.getName() + " (Level " + defensor.getLevel() + ")");
-        Logger.debug("Damage Type: " + typeOfDamage + " | Base Damage " + baseDamage + " + Variable Damage (Random): " + variableDamage);
-        Logger.debug("Critical damage: " + attacker.getCriticalDamage() + " | Critical Chance: " + criticalPercentage + "%");
-        Logger.debug("Damage pre-mitigation: " + (baseDamage + variableDamage));
-        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", levelDifference) + " | Critical Hit: " + (isCritical ? "Yes" : "No"));
-        Logger.debug(typeOfDamage + " defense used: " +  (damageType == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
-                    + " | Damage reduction scale: " + 
-                    (damageType == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
-        Logger.debug("Calculation steps: Damage Dealt = base + variable = "+ (baseDamage+variableDamage) +" * levelDiff -> " + ((baseDamage + variableDamage)*levelDifference) + 
-                    " -> apply defense -> " + damageReduction + " -> apply critical -> " +
-                    (isCritical ? "x" + (1 + (attacker.getCriticalDamage() / 100.0)) : "no critical"));
-        Logger.debug("Final Damage: " + damageDealt);
+        return new DamageResult(willHit, damageType, attackDamage, baseDamage, bonusDamage, variableDamage, levelDifference, damageDealt, damageReduction, criticalPercentage, isCritical);
     }
 
     /**
@@ -89,17 +59,19 @@ public class DamageCalculator {
      * @return true if the attack hits, false if it misses, all attacks have a minimum chance of 5% to hit and a maximum chance of 95% to hit.
      */
     public static boolean willHit(Character attacker, Character defender){
-        double hitChance =  attacker.getAccuracy() - defender.getEvasion();
+        double accuracy = attacker.getAccuracy();
+        double evasion = defender.getEvasion();
+
+        double hitChance =  (accuracy / (accuracy + evasion) * 100);
+        hitChance = Math.max(5, Math.min(95, hitChance));
         double randomValue = Math.random() * 100;
-        if (hitChance < 5 ) hitChance = 5; // Minimum hit chance of 5%
-        if (hitChance > 95) hitChance = 95; // Maximum hit chance of 95%
+
         boolean willHit = randomValue < hitChance;
 
         Logger.info("WILLHIT? -> Hit chance: 5 ~ 95% | " + 
-                    "(Attacker accuracy: " + attacker.getAccuracy() + " - Defender evasion: " + defender.getEvasion() + ") = " + 
-                    String.format("%.0f", hitChance) + " < > Random value: " + String.format("%.0f", randomValue) + " -> " + (willHit ? "> HIT" : "< MISS"));
+        "Atk accuracy ("+attacker.getAccuracy()+")" + " / (Atk accuracy ("+attacker.getAccuracy()+")" + " + Def evasion ("+defender.getEvasion()+") * 100 = " + (int) hitChance +"% < > Random value: " + (int) randomValue + " ? " + (willHit ? "Yes >": "No <"));
 
-        return  willHit;
+        return willHit;
     }
 
     /**
@@ -181,7 +153,7 @@ public class DamageCalculator {
         double critChance = attacker.getCriticalChanceAcumulated();
         double randomValue =Math.random() * 100;
 
-        Logger.info("ISCRITICAL? -> crit chance: " + critChance + " < > Random value: " + String.format("%.0f", randomValue) + " -> " + (critChance > randomValue ? " > Yes":" < No"));
+        Logger.info("ISCRITICAL? -> crit chance: " + (int) critChance + " < > Random value: " + String.format("%.0f", randomValue) + " ? " + (critChance > randomValue ? "> Yes":"< No"));
 
         if (randomValue < critChance) {
             attacker.setCriticalChanceAcumulated(attacker.getCriticalChance()); // if is a critical hit, reset acumulated chance

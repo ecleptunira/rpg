@@ -1,28 +1,40 @@
 package project.rpg.characters.skills;
 
 import project.rpg.characters.Character;
-import project.rpg.combat.DamageCalculator;
-import project.rpg.combat.DamageType;
+import project.rpg.combat.*;
+import project.rpg.utils.Information;
 
 public class BasicAttack extends Skill{
 
-    public BasicAttack(String name, String description) {
-        super(name, description);
+    private static final String NAME = "Basic Attack";
+    private static final String DESCRIPTION = "Simple physical attack";
+
+    public BasicAttack() {
+        super(NAME, DESCRIPTION);
+    }
+    
+    public String getName() {
+        return NAME;
     }
 
-    public String getName() {
-        return "Basic Attack";
+    public String getDescription(){
+        return DESCRIPTION;
     }
 
     @Override
     public void execute(Character attacker, Character defensor) {
-        DamageCalculator.calculateAndApplyDamage(
-            attacker, 
-            defensor, 
-            0.75,
-            0.25,
-            getName(), 
-            DamageType.PHYSICAL);
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 0.75, 0.25, DamageType.PHYSICAL);
+
+        if (result.isCritical()){
+            Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);
+        } else if (result.willHit()){
+            Information.damageStatus(attacker, getName(), result.damageDealt(), defensor);
+        } 
+        if(result.willHit()){
+            defensor.takeDamage(result.damageDealt());
+            Information.showHealth(defensor);
+            Information.combatLogSingleHit(attacker, defensor, result);
+        }
     }
 
 }

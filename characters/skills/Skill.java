@@ -3,8 +3,8 @@ package project.rpg.characters.skills;
 import project.rpg.characters.Character;
 
 public class Skill{
-    private String name;
-    private String description;
+    protected String name;
+    protected String description;
 
     public Skill(String name, String description){
         this.name = name;

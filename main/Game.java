@@ -28,13 +28,17 @@ public class Game {
         Information.battleStart();
         String status = ranger.toString();
 
-        // System.out.println(status);
+        System.out.println(status);
         // mage.gainExperience(322599);
         
         // assasin.useSkill("Basic Attack", goblin);
         // ranger.setLife(1);
         // ranger.useSkill("Basic Arrow", goblin);
-        ranger.useSkill("Basic Arrow", goblin);
+        
+        // ranger.setCriticalChanceAcumulated(100);
+        // ranger.setAccuracy(150);
+        // ranger.useSkill("Multi Shot", goblin);
+        // ranger.useSkill("Basic Arrow", goblin);
         
         // goblin.setMaxLife(5000);
         // goblin.setLife(5000);
