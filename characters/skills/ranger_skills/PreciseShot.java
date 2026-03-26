@@ -1,18 +1,18 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.ranger_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
+public class PreciseShot extends Skill{
 
-public class DivineSword extends Skill {
+    private static final String NAME = "Precise Shot";
+    private static final String DESCRIPTION = "A highly accurate and powerful shot";
 
-    private static final String NAME = "Divine Sword";
-    private static final String DESCRIPTION = "A powerful divine slash.";
-
-    public DivineSword() {
+    public PreciseShot() {
         super(NAME, DESCRIPTION);
     }
-    
+
     public String getName() {
         return NAME;
     }
@@ -23,8 +23,7 @@ public class DivineSword extends Skill {
 
     @Override
     public void execute(Character attacker, Character defensor) {
-        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.0, 0.5, DamageType.PHYSICAL);
-
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.3, 0.3, DamageType.PHYSICAL);
         if (result.isCritical()){
             Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);
         } else if (result.willHit()){
@@ -36,4 +35,5 @@ public class DivineSword extends Skill {
             Information.combatLogSingleHit(attacker, defensor, result);
         }
     }
+
 }

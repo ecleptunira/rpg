@@ -1,6 +1,7 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.mage_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
 

@@ -1,18 +1,19 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.ranger_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
 
-public class BackStab extends Skill{
+public class BasicArrow extends Skill {
 
-    private static final String NAME = "BackStab";
-    private static final String DESCRIPTION = "A powerful attack from the shadows";
+    private static final String NAME = "Basic Arrow";
+    private static final String DESCRIPTION = "A simples arrow shot";
 
-    public BackStab() {
+    public BasicArrow() {
         super(NAME, DESCRIPTION);
     }
-    
+
     public String getName() {
         return NAME;
     }
@@ -23,7 +24,7 @@ public class BackStab extends Skill{
 
     @Override
     public void execute(Character attacker, Character defensor) {
-        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.3, 0.7, DamageType.PHYSICAL);
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 0.8,0.2,DamageType.PHYSICAL);
 
         if (result.isCritical()){
             Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);

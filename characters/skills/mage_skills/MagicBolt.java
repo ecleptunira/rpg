@@ -1,18 +1,19 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.mage_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
 
-public class BasicArrow extends Skill {
+public class MagicBolt extends Skill {
 
-    private static final String NAME = "Basic Arrow";
-    private static final String DESCRIPTION = "A simples arrow shot";
+    private static final String NAME = "Basic magic";
+    private static final String DESCRIPTION = "Simple Magical attack";
 
-    public BasicArrow() {
+    public MagicBolt() {
         super(NAME, DESCRIPTION);
     }
-
+    
     public String getName() {
         return NAME;
     }
@@ -23,7 +24,7 @@ public class BasicArrow extends Skill {
 
     @Override
     public void execute(Character attacker, Character defensor) {
-        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 0.8,0.2,DamageType.PHYSICAL);
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.2, 0.2, DamageType.MAGICAL);
 
         if (result.isCritical()){
             Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);

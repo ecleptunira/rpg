@@ -1,7 +1,7 @@
 package project.rpg.main;
 
 import project.rpg.characters.classes.jobs.*;
-import project.rpg.characters.classes.jobs.monstersjobs.*;
+import project.rpg.characters.classes.jobs.monsters_jobs.*;
 import project.rpg.characters.classes.classes.*;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
@@ -13,9 +13,11 @@ import project.rpg.combat.ExperienceCalculator;
 public class Game {
     public static void main(String[] args) {
         Information.limparTela();
+        Job goblinClass = new GoblinJob();
+        Job highGoblinClass = new HighGoblinJob();
+
         Job assasinClass = new AssasinJob();
         Job heroClass = new HeroJob();
-        Job goblinClass = new GoblinJob();
         Job rangerClass = new RangerJob();
         Job mageClass = new MageJob();
 
@@ -28,7 +30,7 @@ public class Game {
         Information.battleStart();
         String status = ranger.toString();
 
-        System.out.println(status);
+        // System.out.println(status);
         // mage.gainExperience(322599);
         
         // assasin.useSkill("Basic Attack", goblin);
@@ -37,7 +39,7 @@ public class Game {
         
         // ranger.setCriticalChanceAcumulated(100);
         // ranger.setAccuracy(150);
-        // ranger.useSkill("Multi Shot", goblin);
+        ranger.useSkill("Multi Shot", goblin);
         // ranger.useSkill("Basic Arrow", goblin);
         
         // goblin.setMaxLife(5000);

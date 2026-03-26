@@ -1,12 +1,13 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.ranger_skills;
 
 import project.rpg.utils.Information;
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 
 public class MultiShot extends Skill{
 
-    private static final String NAME = "Multi-Shot";
+    private static final String NAME = "Multi Shot";
     private static final String DESCRIPTION = "Shoots 3 arrows at once";
 
     public MultiShot() {

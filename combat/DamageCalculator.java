@@ -13,7 +13,7 @@ public class DamageCalculator {
                                                 DamageType damageType){
         //Check list
         Logger.info("================ DAMAGE CALCULATOR ================");
-        Logger.info("DAMAGE CALCULATOR -> " + attacker.getName() + " is attacking " + defensor.getName() + " with " + damageType + " damage.");
+        Logger.info("DAMAGE CALCULATOR -> " + attacker.getName() + " is attacking " + defensor.getName() + " with " + (damageType == DamageType.PHYSICAL ? "Physical": "Magical") + " damage.");
         //1 - Check if the attack will hit
         boolean willHit = willHit(attacker, defensor);
         if (!willHit) {

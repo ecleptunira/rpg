@@ -212,7 +212,7 @@ public class Information {
                     "Defender: " + defensor.getName() + " (Level " + defensor.getLevel() + ")");
         Logger.debug("Damage Type: " + result.damageType() + " | Base Damage " + result.baseDamage() + " + Variable Damage (Random): " + result.variableDamage());
         Logger.debug("Critical damage: " + attacker.getCriticalDamage() + " | Critical Chance: " + result.criticalPercentage() + "% | Damage pre-mitigation: " + (result.baseDamage() + result.variableDamage()));
-        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", result.levelDifference()) + " | Critical Hit: " + (result.isCritical() ? "Yes" : "No"));
+        Logger.debug("Level Difference Multiplier: " + String.format("%.1f", result.levelDifference()) + "x | Critical Hit: " + (result.isCritical() ? "Yes" : "No"));
         Logger.debug((result.damageType() == DamageType.PHYSICAL ? "Physical" : "Magical") + " defense used: " +  (result.damageType() == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
                     + " | Damage reduction scale: " + 
                     (result.damageType() == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");

@@ -2,7 +2,7 @@ package project.rpg.characters.classes.classes;
 
 import project.rpg.characters.Player;
 import project.rpg.characters.classes.jobs.Job;
-import project.rpg.characters.classes.jobs.monstersjobs.MonsterJob;
+import project.rpg.characters.classes.jobs.monsters_jobs.MonsterJob;
 
 public class Monster extends Player{
     private int baseExp;

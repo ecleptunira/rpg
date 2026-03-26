@@ -1,6 +1,7 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.hero_skills.*;
 import project.rpg.characters.skills.*;
 
 public class HeroJob extends Job {

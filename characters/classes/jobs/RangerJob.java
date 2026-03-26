@@ -1,7 +1,7 @@
 package project.rpg.characters.classes.jobs;
 
 import project.rpg.characters.Character;
-import project.rpg.characters.skills.*;
+import project.rpg.characters.skills.ranger_skills.*;
 
 public class RangerJob extends Job{
 

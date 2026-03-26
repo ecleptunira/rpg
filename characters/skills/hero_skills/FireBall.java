@@ -1,15 +1,16 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.hero_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
 
-public class MagicBolt extends Skill {
+public class FireBall extends Skill{
 
-    private static final String NAME = "Basic magic";
-    private static final String DESCRIPTION = "Simple Magical attack";
+    private static final String NAME = "FireBall";
+    private static final String DESCRIPTION = "A ball of fire that burns the enemy.";
 
-    public MagicBolt() {
+    public FireBall() {
         super(NAME, DESCRIPTION);
     }
     
@@ -22,8 +23,8 @@ public class MagicBolt extends Skill {
     }
 
     @Override
-    public void execute(Character attacker, Character defensor) {
-        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.2, 0.2, DamageType.MAGICAL);
+    public void execute(Character attacker, Character defensor){
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.5, 0.5, DamageType.MAGICAL);
 
         if (result.isCritical()){
             Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);

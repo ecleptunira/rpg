@@ -1,15 +1,16 @@
-package project.rpg.characters.skills;
+package project.rpg.characters.skills.assasin_skills;
 
 import project.rpg.characters.Character;
+import project.rpg.characters.skills.Skill;
 import project.rpg.combat.*;
 import project.rpg.utils.Information;
 
-public class FireBall extends Skill{
+public class BackStab extends Skill{
 
-    private static final String NAME = "FireBall";
-    private static final String DESCRIPTION = "A ball of fire that burns the enemy.";
+    private static final String NAME = "BackStab";
+    private static final String DESCRIPTION = "A powerful attack from the shadows";
 
-    public FireBall() {
+    public BackStab() {
         super(NAME, DESCRIPTION);
     }
     
@@ -22,8 +23,8 @@ public class FireBall extends Skill{
     }
 
     @Override
-    public void execute(Character attacker, Character defensor){
-        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.5, 0.5, DamageType.MAGICAL);
+    public void execute(Character attacker, Character defensor) {
+        DamageResult result = DamageCalculator.calculateDamage(attacker, defensor, 1.3, 0.7, DamageType.PHYSICAL);
 
         if (result.isCritical()){
             Information.criticalHit(attacker, getName(), result.damageDealt(), defensor);
