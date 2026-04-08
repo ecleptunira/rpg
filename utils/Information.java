@@ -3,7 +3,6 @@ package project.rpg.utils;
 import project.rpg.characters.Character;
 import project.rpg.combat.DamageResult;
 import project.rpg.combat.DamageType;
-
 import java.util.Scanner;
 
 /**
@@ -25,36 +24,22 @@ public class Information {
     public static final String YELLOW = "\u001B[33m"; // Attacker
     public static final String PURPLE = "\u001B[35m"; // Hability
 
-
-    /**
-     * Display the start message for a battle
-     */
     public static void battleStart() {
         Logger.capturePrint("╔" + "═".repeat(43)+ "╗");
         Logger.capturePrint("║               BATTLE START!               ║"); 
         Logger.capturePrint("╚" + "═".repeat(43)+ "╝");
     }
 
-    /**
-     * Display the end message for a battle
-     * @param winnerName name of the winner or "DRAW" if has no winner
-     */
     public static void battleOver(String winnerName) {
         String winnerNameUpper = winnerName.toUpperCase();
         String winnerPhrase = "║        " + winnerNameUpper + " WON THE BATTLE! " + "        ║";
-        if (winnerNameUpper.equals("DRAW")) {
-            winnerPhrase = "║               IT'S A DRAW!                ║";
-        }
         int totalLength = winnerPhrase.length();
         Logger.capturePrint("╔" + "═".repeat(totalLength - 2) + "╗"); 
         Logger.capturePrint(winnerPhrase);
         Logger.capturePrint("╚" + "═".repeat(totalLength - 2) + "╝");
     }
 
-    /**
-     * Clear the console screen on windows systems
-     */
-    public static void limparTela() {
+    public static void clearScreen() {
         try {
             String os = System.getProperty("os.name");
 
@@ -66,9 +51,6 @@ public class Information {
         }
     }
 
-    /**
-     * Pause the game until user press enter
-     */
     public static void pressEnterToContinue() {
         System.out.println("\nPress" + YELLOW + " Enter " + RESET + "to continue...");
         SC.nextLine();
@@ -116,16 +98,10 @@ public class Information {
         Logger.capturePrint(lineBreak1);
     }
 
-    /**
-     * Overloaded method to display the damage status when no hability name is provided
-     */
     public static void damageStatus(Character attacker,int damageDealt, Character defender) {
         damageStatus(attacker, "attack",damageDealt, defender);
     }
 
-    /**
-     * Display a message when an attack misses
-     */
     public static void damageMissed(Character attacker, String hability, Character defender) {
         Logger.capturePrint(lineBreak1);
         
@@ -139,42 +115,23 @@ public class Information {
         Logger.capturePrint(lineBreak1);
     }
 
-    /**
-     * Overloaded method to display the damage missed when no hability name is provided
-     */
     public static void damageMissed(Character attacker, Character defender) {
         damageMissed(attacker, "attack", defender);
     }
 
-    /**
-     * Display a message when an attack is out of range
-     */
-    public static void outOfRange(String attacker, String defender) {
-        Logger.capturePrint(lineBreak2);
-        Logger.capturePrint(RED + "Out of range! " + RESET + attacker + " cannot reach " + defender + ".");
-        Logger.capturePrint(lineBreak2);
-    }
-
-    /**
-     * Display a message when a character is defeated
-     * @param character character who has been defeated
-     */
     public static void characterDead(String dead) {
         Logger.capturePrint(lineBreak2);
         Logger.capturePrint(RED + dead + RESET + " has been "+ RED +"defeated" + RESET + "!");
         Logger.capturePrint(lineBreak2);
     }
 
-    /**
-     * Display character healt bars in the console
-     * @param character character health bar to be shown
-     */
     public static void showHealth(Character character){
         int totalBars = 20;
         int filledBars = (int) Math.round(((double) character.getLife() / character.getMaxLife()) * totalBars);
         int emptyBars = totalBars - filledBars;
         String healthBar = "[" + GREEN + "█".repeat(filledBars) + RED + "-".repeat(emptyBars) + RESET + "]";
         Logger.capturePrint(YELLOW + character.getName() + RESET + " Health: " + healthBar + " "+ character.getLife() + "/" + character.getMaxLife() + " HP");
+        Logger.capturePrint(lineBreak1);
     }
 
     public static void showExperience(Character character){
@@ -233,5 +190,9 @@ public class Information {
                     (result.damageType() == DamageType.PHYSICAL ? defensor.getPhysicalDefense() : defensor.getMagicalDefense())
                     + " | Damage reduction scale: " + (result.damageType() == DamageType.PHYSICAL ? defensor.getPercentPhysicalDefense() : defensor.getPercentMagicDefense()) + "%");
         Logger.debug("Final Damage: " + damageDealt);
+    }
+
+    public static void showCharacterInfo(String c){
+        Logger.capturePrint(c);
     }
 }

@@ -12,29 +12,26 @@ import java.util.stream.Collectors;
 public abstract class Character {
     private List<Skill> skills = new ArrayList<>();
 
-    private String name;                        // name of the character
-    private int level = 0;                      // level of the character
-    private int experience = 0;                 // experience points
-    private int experienceToNextLevel = 100;    // experience needed for next level
+    private String name;
+    private int level = 0;
+    private int experience = 0;
+    private int experienceToNextLevel = 10;
     
-    private int life = 100;              // current life
-    private int maxLife = life;          // maximum life
+    private int life = 100;
+    private int maxLife = life;
 
-    private int physicalDamage = 1;      // base physical damage
-    private int magicalDamage = 1;       // base magic damage
+    private int physicalDamage = 1;
+    private int magicalDamage = 1;
 
-    private int physicalDefense = 0;     // base physical defense
-    private int magicDefense = 0;        // base magic defense
+    private int physicalDefense = 0;
+    private int magicDefense = 0;
 
-    // private int posX = 0;                // position on X axis
-    // private int posY = 0;                // position on Y axis
+    private int criticalChance = 0;
+    private int criticalChanceAcumulated = 0;
+    private int criticalDamage = 50;
 
-    private int criticalChance = 0;                        // percentage chance to land a critical hit
-    private int criticalChanceAcumulated = 0;              // acumulated critical chance for next attack
-    private int criticalDamage = 50;                       // percentage increase in damage on a critical hit
-
-    private int evasion = 0;              // percentage chance to evade an attack
-    private int accuracy = 0;             // percentage chance to hit an attack
+    private int evasion = 0;
+    private int accuracy = 0;
 
     protected Character(String name, Job choosenClass) {
         this.name = name;
@@ -45,44 +42,21 @@ public abstract class Character {
         this.name = name;
     }
 
-    // public boolean canAttack(Character enemy) {
-    //     int deltaX = Math.abs(this.posX - enemy.posX);
-    //     int deltaY = Math.abs(this.posY - enemy.posY);
-    //     return (deltaX < 2 && deltaY == 0) || (deltaX == 0 && deltaY < 2);
-    // }
-
-    /**
-     * Reduce the character's life when taking damage,
-     * ensuring it does not drop below zero.
-     * @param damage amound damage to be taken
-     */
     public void takeDamage(int damage) {
         this.life -= damage;
         if (this.life < 0) this.life = 0;
     }
 
-    /**
-     * Heal the character by a especific amount,
-     * ensuring life does not exceed maxLife.
-     * @param amount amount to heal
-     */
     public int heal(int amount){
         int before = this.life;
         this.life = Math.min(this.life + amount, this.maxLife);
         return (this.life - before);
     }
 
-    /**
-     * Restore the character's life to full capacity.
-     */
     public void restoreLifeToFull(){
         this.life = this.maxLife;
     }
 
-    /**
-     * Increase character's experience points
-     * @param amount Amount of experience to be gained
-     */
     public void gainExperience(int amount){
         this.experience += amount;
         Information.gainExperience(this, amount);
@@ -92,9 +66,6 @@ public abstract class Character {
         }
     }
 
-    /**
-     * level up the character.
-     */
     public void levelUp(){
         this.level ++;
         this.experience -= this.experienceToNextLevel ;
@@ -112,14 +83,8 @@ public abstract class Character {
             this.level ++;
             this.experienceToNextLevel = (int) Math.round(this.experienceToNextLevel * 1.25);
         }
-        // Information.levelUp(this);
-        // Information.showExperience(this);
     }
 
-    /**
-     * Check if the character is alive
-     * @return true if is alive and false if is dead
-     */
     public boolean isAlive(){
         return this.life > 0;
     }
@@ -136,23 +101,8 @@ public abstract class Character {
         "\n | Critical Damage: " + criticalDamage + "%" +
         "\n | Evasion: " + evasion + "%" +
         "\n | Accuracy: " + accuracy + "%" +
-        // "\n | Position: (" + posX + ", " + posY + ")" +
         "\n | Skills: " + skills.stream().map(Skill::getName).collect(Collectors.joining(", "));
     }
-
-    // public void move (Direction direction) {
-    //     if (direction == Direction.UP) {
-    //         this.posY += 1;
-    //     } else if (direction == Direction.DOWN) {
-    //         this.posY -= 1;
-    //     } else if (direction == Direction.LEFT) {
-    //         this.posX -= 1;
-    //     } else if (direction == Direction.RIGHT) {
-    //         this.posX += 1;
-    //     }
-    // }
-
-    //Setters and Getters
 
     public List<Skill> getSkills() {
         return skills;
@@ -236,20 +186,6 @@ public abstract class Character {
     public void setMaxLife(int maxLife) {
         this.maxLife = maxLife;
     }
-
-    // public int getPosX() {
-    //     return posX;
-    // }
-    // public void setPosX(int posX) {
-    //     this.posX = posX;
-    // }
-
-    // public int getPosY() {
-    //     return posY;
-    // }
-    // public void setPosY(int posY) {
-    //     this.posY = posY;
-    // }
 
     public int getCriticalChance() {
         return criticalChance;

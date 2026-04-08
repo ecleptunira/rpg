@@ -2,6 +2,7 @@ package project.rpg.characters.classes.jobs.monsters_jobs;
 
 import project.rpg.characters.Character;
 import project.rpg.characters.skills.Stomp;
+import project.rpg.characters.skills.BasicAttack;
 
 
 public class GoblinJob extends MonsterJob{
@@ -9,18 +10,19 @@ public class GoblinJob extends MonsterJob{
     public GoblinJob() {
         super("Goblin");
         skills.add(new Stomp());
+        skills.add(new BasicAttack());
 
     }
 
     @Override
     public void applyClassStats(Character character) {
-        character.setPhysicalDamage(30);
+        character.setPhysicalDamage(20);
 
         character.setPhysicalDefense(25);
         character.setMagicalDefense(15);
 
-        character.setMaxLife(250);
-        character.setLife(250);
+        character.setMaxLife(40);
+        character.setLife(40);
 
         character.setCriticalChance(10);
         character.setCriticalChanceAcumulated(10);
@@ -28,18 +30,16 @@ public class GoblinJob extends MonsterJob{
 
         character.setEvasion(10);
         character.setAccuracy(15);
-
-        // character.setBaseExp(5);
     }
 
     @Override
     public void applyLevelStats(Character c) {
-        c.setMaxLife(c.getMaxLife() * c.getLevel());
+        c.setMaxLife(c.getMaxLife() + 25);
         c.setLife(c.getMaxLife());
 
-        c.setPhysicalDamage(c.getPhysicalDamage() * (int) Math.round(1 + c.getLevel() * 0.05));
-
-        c.setMagicalDefense(c.getMagicalDefense() * (int) Math.round(1 + c.getLevel() * 0.04));
-        c.setPhysicalDefense(c.getPhysicalDefense() * (int) Math.round(1 + c.getLevel() * 0.04));
+        double multiplier = (1 + c.getLevel() * 0.05);
+        c.setPhysicalDamage((int) (c.getPhysicalDamage() * multiplier));
+        c.setMagicalDefense((int) (c.getMagicalDefense() * multiplier));
+        c.setPhysicalDefense((int) (c.getPhysicalDefense() * multiplier));
     }
 }

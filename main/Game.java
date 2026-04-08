@@ -1,56 +1,70 @@
 package project.rpg.main;
 
 import project.rpg.characters.classes.jobs.*;
-import project.rpg.characters.classes.jobs.monsters_jobs.*;
+
+import java.util.Scanner;
+
+import project.rpg.characters.Player;
 import project.rpg.characters.classes.classes.*;
 import project.rpg.utils.Information;
 import project.rpg.utils.Logger;
-import project.rpg.combat.DamageCalculator;
-import project.rpg.combat.ExperienceCalculator;
+import project.rpg.utils.mainAssistant;
+import static project.rpg.utils.mainAssistant.waitSeconds;
 
 
-@SuppressWarnings("unused")
 public class Game {
     public static void main(String[] args) {
-        Information.limparTela();
-        Job goblinClass = new GoblinJob();
-        Job highGoblinClass = new HighGoblinJob();
+        Logger.clearLog();
+        Scanner sc = new Scanner(System.in);
 
-        Job assasinClass = new AssasinJob();
-        Job heroClass = new HeroJob();
-        Job rangerClass = new RangerJob();
-        Job mageClass = new MageJob();
+        // System.out.println("Bem-vindo ao RPG!");
+        // System.out.println("Para iniciar a aventura, é necessário que você escolha a sua classe!");
+        // Job job = mainAssistant.chooseJob(sc);
+        // System.out.println("Qual será o nome do seu personagem?");
+        // Player player = new Player(sc.nextLine(), job);
+        Player player = new Player("Legolas", new RangerJob());
+        Information.clearScreen();
 
-        Mage mage = new Mage("Gandalf", mageClass);
-        Ranger ranger = new Ranger("Legolas", rangerClass);
-        Assasin assasin = new Assasin("Ezio", assasinClass);
-        Hero hero = new Hero ("Arthur", heroClass);
-        Monster goblin = new Monster("Goblin", goblinClass, 5);
-        
-        Information.battleStart();
-        String status = ranger.toString();
+        Monster monster;
+        int wave = 0;
+        while(player.isAlive()){
+            player.restoreLifeToFull();
+            wave++;
+            System.out.println("\nWave " + wave);
+            waitSeconds(1); // usar depois para ajustar o tempo entre as ações
+            System.out.println();
+            Logger.capturePrint("1 - Attack | 2 - Character info | 3 - Flee");
+            Logger.capturePrint("What do tou want to do? ");
+            System.out.print("--- ");
+            int choice;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                Logger.capturePrint("Invalid input!");
+                continue;
+            }
 
-        // System.out.println(status);
-        // mage.gainExperience(322599);
-        
-        // assasin.useSkill("Basic Attack", goblin);
-        // ranger.setLife(1);
-        // ranger.useSkill("Basic Arrow", goblin);
-        
-        // ranger.setCriticalChanceAcumulated(100);
-        // ranger.setAccuracy(150);
-        ranger.useSkill("Multi Shot", goblin);
-        // ranger.useSkill("Basic Arrow", goblin);
-        
-        // goblin.setMaxLife(5000);
-        // goblin.setLife(5000);
-        // goblin.setLevel(30);
-        // ranger.forceLevelTo(30);
-        // ranger.setLife(1);
+            switch (choice){
+                case 1:
+                    Information.battleStart();
+                    monster = mainAssistant.generateEnemy(wave, player);
+                    Logger.capturePrint("A " + monster.getName() + " appeared!");
+                    Logger.capturePrint("Prepare for battle!");
+                    mainAssistant.startBattle(player, monster, sc);
+                    continue;
 
-        // status = ranger.toString();
-        // System.out.println(status);
-        
-        // hero.useSkill("Fire Ball", goblin);
+                case 2:
+                    Information.showCharacterInfo(player.toString());
+                    continue;
+
+                case 3:
+                    Logger.capturePrint("You fled from the battle!");
+                    break;
+
+                default:
+                    System.out.println("Invalid option!");
+            }
+        }
+        sc.close();
     }
 }

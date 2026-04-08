@@ -37,11 +37,11 @@ public class Player extends Character{
 
     @Override
     public void forceLevelTo(int targetLevel){
-        int a = this.getLevel();
+        int lvl = this.getLevel();
         super.forceLevelTo(targetLevel);
-        while (this.getLevel() >= a){
+        while (this.getLevel() > lvl){
             job.applyLevelStats(this);
-            a++;
+            lvl++;
         }
     }
     
